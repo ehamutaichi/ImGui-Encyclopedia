@@ -596,20 +596,102 @@ strong.prose-key .inline-code,strong.prose-rule .inline-code,strong.prose-critic
 .search-help{font-size:12px;line-height:1.8;color:var(--body-ink);margin:8px 0 16px}.search-help.search-expanded{color:var(--tone-warning);font-weight:600}
 @media(max-width:1200px){.mobile-doc-outline{display:block;padding:12px 15px;margin:0 0 23px;border:1px solid var(--line);border-radius:8px;background:var(--surface-raised)}.mobile-doc-outline summary{cursor:pointer;font-weight:600;color:var(--tone-usage)}.mobile-doc-outline button{display:block;background:transparent;color:var(--body-ink);padding:8px 0;text-align:left;line-height:1.7}.guide-body .code-scroll-hint,.code-scroll-hint{display:block;font-size:11px;color:var(--muted);margin:10px 0 6px}}
 @media(max-width:720px){.guide-example-result{padding:13px 12px;margin:17px 0 24px}.guide-example-result>h4{font-size:13px}}
+
+/* 小型画面では、横幅を本文へ渡し、主要操作の押しやすさをそろえる。 */
+.tab-label-compact,.mobile-explorer-heading,.mobile-shortcuts{display:none}
+.search-result-hint{display:inline-block;margin-left:8px;padding:1px 7px;border:1px solid var(--tone-warning-line);border-radius:5px;color:var(--tone-warning);font-size:11px;white-space:nowrap}
+.dialog-bar>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dialog-bar>div{display:flex;align-items:center;gap:8px;flex-shrink:0}
+
+@media(max-width:1000px){
+  :root{--mobile-header-height:60px}
+  html{scroll-padding-top:calc(var(--mobile-header-height) + 60px)}
+  .topbar{height:var(--mobile-header-height);padding:0 12px;gap:8px}
+  .topbar nav,.topbar .version,.brand b{display:none}
+  .brand{flex:1;min-width:0;font-size:14px;gap:8px}.brand-mark{width:30px;height:30px;min-width:30px;font-size:15px;line-height:28px}
+  .topbar .theme-toggle,.display-settings>summary{width:44px;height:44px;min-width:44px;padding:0;display:flex;align-items:center;justify-content:center;font-size:21px;border-radius:10px}
+  .display-settings-label,.display-settings-label::after{display:none}.display-settings-symbol{font-size:21px}
+  .display-settings-panel{position:fixed;top:calc(var(--mobile-header-height) + 8px);right:12px;left:auto;width:min(340px,calc(100vw - 24px));max-width:none;max-height:calc(100dvh - var(--mobile-header-height) - 24px);overflow:auto;overscroll-behavior:contain}
+  .workspace{grid-template-columns:1fr}.sidebar{display:none}.explorer-toggle{display:flex}
+  .explorer-backdrop{display:block;position:fixed;inset:var(--mobile-header-height) 0 0;z-index:22;background:#0008}
+  body.explorer-open{overflow:hidden}
+  .explorer-open .sidebar{display:block;position:fixed;top:var(--mobile-header-height);left:0;bottom:0;width:min(320px,calc(100vw - 32px));height:calc(100dvh - var(--mobile-header-height));z-index:23;padding:12px;overflow:auto;overscroll-behavior:contain;border-right:1px solid var(--line)}
+  .mobile-explorer-heading{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2;margin:0 0 15px;padding:4px 0 8px 10px;background:var(--panel);font-size:16px}
+  .mobile-explorer-heading .close{width:44px;height:44px;min-width:44px;line-height:1;font-size:25px}
+  .sidebar .nav-caption{display:none}.mobile-shortcuts{display:block}
+  .sidebar .category,.sidebar .explorer-link{min-height:44px;padding:9px 11px;font-size:14px;line-height:1.7}
+  /* 旧レイアウトの横並び・幅自動を打ち消し、カテゴリを1行ずつ並べる。 */
+  .sidebar #categories,.sidebar #flag-categories{display:grid;grid-template-columns:minmax(0,1fr);align-items:stretch;gap:2px;min-width:0}
+  .sidebar .category{width:100%;min-width:0;white-space:normal;overflow-wrap:anywhere}
+  .sidebar .category>span:first-child{min-width:0}.sidebar .category .count{flex-shrink:0}
+  .sidebar .explorer-heading{font-size:12px}.sidebar .count{font-size:11px}
+  main{padding:0 16px}
+  .workspace-tabs{position:sticky;top:var(--mobile-header-height);z-index:10;height:48px;margin:0 -16px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .workspace-tab{min-height:48px;padding:0 8px;font:600 14px var(--font);border-bottom:2px solid transparent}
+  .workspace-tab.active{border-top:0;border-bottom-color:var(--accent)}.tab-label,#workspace-context{display:none}.tab-label-compact{display:inline}
+  .reference{padding:20px 0 28px;min-height:0}
+  .section-heading{align-items:flex-start;flex-direction:column;gap:6px;margin-bottom:14px}.section-heading h2{font-size:25px}
+  .section-heading .eyebrow{display:none}.result-count{font-size:12px;white-space:normal;line-height:1.8;padding:0}.index-context{font-size:11px;margin-top:2px}
+  .search-row{gap:8px}.searchbox{height:48px;min-width:0;padding:0 12px;gap:9px}.searchbox input{font-size:16px;line-height:1.5}.searchbox kbd{display:none}
+  .reset{min-height:44px;min-width:44px;padding:6px;font-size:12px}
+  .filter-row{display:flex;flex-direction:column;align-items:stretch;gap:10px;margin:12px 0}
+  .filters{gap:6px}.filter{min-height:40px;font-size:12px;padding:7px 10px}
+  .sort-controls{display:flex;justify-content:flex-start;width:100%}#frequency-sort{display:none}
+  .sort-label{width:100%;justify-content:space-between;font-size:13px}
+  .sort-label select{height:44px;min-width:155px;max-width:none;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:14px}
+  .reference-controls{justify-content:space-between;gap:8px;margin:10px 0 16px}
+  .reference-controls>label{flex:1;min-width:0;font-size:12px}.reference-controls .control-caption{display:none}.reference-controls select{width:100%;min-width:0;min-height:44px;max-width:none;font-size:13px}
+  .view-switch button{min-height:44px;min-width:48px;font-size:12px;padding:7px}.guide-shortcut{display:none}
+  .cards:not(.list-view){grid-template-columns:repeat(2,minmax(0,1fr))}
+  .api-row{grid-template-columns:1fr;padding:15px 12px;gap:7px}.row-title code{font-size:14px;line-height:1.7}.row-summary{font-size:14px;line-height:1.8;margin-left:36px}.row-meta{justify-content:flex-start;max-width:none;margin-left:36px;gap:7px}
+  .guide-filters{gap:7px}.guide-category,.flag-category-filters button{min-height:40px;font-size:12px;padding:7px 10px}
+  .guide-level-filter{flex-basis:100%;justify-content:space-between;margin-left:0;font-size:13px}.guide-level-filter select{min-height:44px;font-size:14px;min-width:150px}
+  .guide-path-card li button{display:block;min-height:44px;padding:8px 0;font-size:14px}.guide-path-more{min-height:44px;font-size:13px}
+  .flag-index-controls{align-items:stretch;gap:12px}.flag-index-controls>.flags-select-label{width:100%;max-width:none;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:13px}
+  .flag-index-controls .flags-select-label select,.flags-select-label select{height:44px;max-width:100%;font-size:14px}
+  .flag-reference-body .flags-controls{align-items:stretch;gap:12px}.flag-reference-body .flags-controls .searchbox{width:100%;flex-basis:100%;min-width:0}
+  .flag-reference-body .flags-controls .flags-select-label{width:100%;display:flex;justify-content:space-between;align-items:center}
+  .pagination{gap:6px}.pagination button{min-width:40px;height:44px;font-size:12px}.pagination span{font-size:11px}
+  #detail-dialog{top:var(--mobile-header-height);left:0;width:100%;height:calc(100dvh - var(--mobile-header-height));border-left:0;overscroll-behavior:contain;scroll-padding-top:76px}
+  .dialog-bar{padding:6px 12px;min-height:58px;gap:8px}.dialog-bar>span{font-size:11px}.dialog-bar .close{height:44px;width:44px;min-width:44px;font-size:25px;line-height:1}
+  .dialog-bar .icon-button{min-height:44px;min-width:44px;padding:6px 10px;font-size:12px}
+  .detail-header{padding:20px 16px 16px}.detail-header h2{font-size:clamp(20px,4.8vw,26px);line-height:1.55;overflow-wrap:anywhere}.detail-header .japanese-title{font-size:16px}
+  .detail-grid{grid-template-columns:1fr;gap:20px;padding:0 16px 22px}.variants,.api-notes{padding:20px 16px}.guide-body{padding:0 16px 24px}
+  .documentation-layout{display:block}.doc-outline{display:none}.documentation-body{min-width:0}
+  .documentation-body p,.documentation-body li{overflow-wrap:anywhere}
+  .documentation-body section[id],.documentation-body h2[id],.documentation-body h3[id],.guide-example-result[id]{scroll-margin-top:76px}
+  .mobile-doc-outline{margin:12px 16px 20px;padding:10px 12px}.mobile-doc-outline>summary{min-height:36px;display:list-item;font-size:14px;line-height:36px}.mobile-doc-outline button{min-height:44px;font-size:14px;padding:8px 0}
+  .mobile-doc-outline[open]{max-height:min(65dvh,440px);overflow:auto;overscroll-behavior:contain}
+  .minor-heading{flex-wrap:wrap;gap:8px}.copy-button,.related-link{min-height:40px;font-size:12px;padding:7px 10px}
+  .related-link,.flag-type-link{max-width:100%;overflow-wrap:anywhere;white-space:normal}.flag-type-link{min-height:40px;font-size:12px;padding:7px 10px}
+  .related-links{gap:8px}.variant>summary{padding:12px;flex-wrap:wrap}.variant>summary code{font-size:13px;flex-basis:100%;overflow-wrap:anywhere}
+  .params td,.params th{padding:10px 8px;overflow-wrap:anywhere}.params td{font-size:13px}.params td code{font-size:12px;overflow-wrap:anywhere}
+  .source-row{flex-wrap:wrap;gap:8px}.source-row>a{padding:9px 0}.flag-value h4{overflow-wrap:anywhere}.flag-permalink{min-height:40px}
+  pre.code{max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-inline:contain;font-size:13px}.guide-table{table-layout:fixed}
+  #image-dialog{width:calc(100vw - 16px);max-width:none;max-height:calc(100dvh - 16px);padding:10px 10px 12px;border-radius:10px;overscroll-behavior:contain}
+  #image-dialog #image-close{position:sticky;top:0;right:auto;z-index:2;display:block;float:none;margin:0 0 8px auto;width:44px;height:44px;font-size:25px;line-height:1}
+  #about-dialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);overscroll-behavior:contain}.about-content{padding:18px 16px}
+  footer{gap:10px;padding:22px 0}footer button,footer a{min-height:40px;display:inline-flex;align-items:center}
+}
+@media(max-width:540px){
+  .cards:not(.list-view){grid-template-columns:1fr}
+  .guide-path-grid{grid-template-columns:1fr}.guide-card{padding:18px}.guide-card h3{font-size:18px}
+}
 </style>
 </head>
 <body>
 <a class="skip" href="#reference">関数一覧へ移動</a>
 <header class="topbar">
-  <button id="explorer-toggle" class="theme-toggle explorer-toggle" aria-label="エクスプローラーを開く" aria-controls="explorer" aria-expanded="false">☰</button>
+  <button id="explorer-toggle" class="theme-toggle explorer-toggle" aria-label="メニューを開く" aria-controls="explorer" aria-expanded="false">☰</button>
   <a class="brand" href="#home" aria-label="ドキュメントのホーム"><span class="brand-mark" aria-hidden="true">{ }</span><span>Dear ImGui <b>DOCS</b></span></a>
   <nav aria-label="メイン"><a href="#reference" data-view="reference" class="nav-link active">関数</a><a href="#flags" data-view="flags" class="nav-link">フラグ</a><a href="#guides" data-guide-category="all" class="nav-link">入門・使い方</a><a href="#guides-docking" data-guide-category="docking" class="nav-link">Docking</a><a href="#guides-extensions" data-guide-category="extensions" class="nav-link">拡張ライブラリ</a><a href="#gallery" data-view="gallery" class="nav-link">キャプチャ</a><button id="about-open" class="nav-link">資料情報</button></nav>
-  <details id="display-settings" class="display-settings"><summary title="表示設定"><span class="display-settings-symbol" aria-hidden="true">◐</span><span class="display-settings-label">表示設定</span></summary><div class="display-settings-panel"><p class="display-settings-heading">表示設定</p><button id="contrast-toggle" type="button" role="switch" aria-checked="true" aria-label="コントラストを高める" aria-describedby="contrast-help"><span class="contrast-copy"><span class="contrast-label">コントラストを高める</span><span id="contrast-status" class="contrast-status">オン</span></span><span class="contrast-switch" aria-hidden="true"></span></button><p id="contrast-help">文字と枠線を少し濃くします。</p></div></details>
+  <details id="display-settings" class="display-settings"><summary title="表示設定" aria-label="表示設定"><span class="display-settings-symbol" aria-hidden="true">◐</span><span class="display-settings-label">表示設定</span></summary><div class="display-settings-panel"><p class="display-settings-heading">表示設定</p><button id="contrast-toggle" type="button" role="switch" aria-checked="true" aria-label="コントラストを高める"><span class="contrast-copy"><span class="contrast-label">コントラストを高める</span><span id="contrast-status" class="contrast-status">オン</span></span><span class="contrast-switch" aria-hidden="true"></span></button></div></details>
   <button id="theme-toggle" class="theme-toggle" aria-label="ライトテーマへ切り替え" title="ライト／ダークを切り替える">☀</button>
   <span class="version"><i></i> v1.93.0</span>
 </header>
 <div class="workspace">
 <aside class="sidebar" id="explorer" aria-label="カテゴリ">
+  <div class="mobile-explorer-heading"><strong>メニュー</strong><button id="explorer-close" class="close" aria-label="メニューを閉じる">×</button></div>
   <p class="nav-caption">EXPLORER</p>
   <div class="explorer-section reference-navigation"><p class="explorer-heading">リファレンス</p><button class="explorer-link active" data-view="reference">関数一覧 <span>API</span></button><button class="explorer-link" data-view="flags">フラグ一覧 <span id="flag-type-count"></span></button></div>
   <div class="explorer-section"><p class="explorer-heading">はじめに読む</p><button class="explorer-link" data-guide-category="all">入門ガイド・使い方</button><button class="explorer-link" data-guide-category="troubleshooting">注意点・トラブル対処</button><button class="explorer-link" data-guide-category="rendering">画像表示・DX11 / DX12</button><button class="explorer-link" data-guide-category="docking">Dockingを使う</button><button class="explorer-link" data-guide-category="extensions">ImGuizmo / Node / Sequencer</button></div>
@@ -622,22 +704,21 @@ strong.prose-key .inline-code,strong.prose-rule .inline-code,strong.prose-critic
   <div id="categories"></div>
   </div>
   <div id="flags-explorer" hidden><p class="explorer-heading">フラグカテゴリ</p><div id="flag-categories"></div></div>
+  <div class="explorer-section mobile-shortcuts"><p class="explorer-heading">その他</p><button class="explorer-link" data-view="gallery">キャプチャ一覧</button><button class="explorer-link" data-about-open>資料情報</button></div>
   <div class="sidebar-foot"><span class="dot"></span> オフラインで使えます<small>公式 v1.93.0 タグに準拠<br>画像は実行結果のキャプチャ</small></div>
 </aside>
 <button id="explorer-backdrop" class="explorer-backdrop" aria-label="エクスプローラーを閉じる" hidden></button>
 <main id="home">
-  <div class="workspace-tabs"><button class="workspace-tab active" data-view="reference">API Reference</button><button class="workspace-tab" data-view="flags">Flag Reference</button><button class="workspace-tab" data-guide-category="all">Guides &amp; Recipes</button><span id="workspace-context">Dear ImGui / v1.93.0</span></div>
+  <div class="workspace-tabs"><button class="workspace-tab active" data-view="reference"><span class="tab-label">API Reference</span><span class="tab-label-compact">関数</span></button><button class="workspace-tab" data-view="flags"><span class="tab-label">Flag Reference</span><span class="tab-label-compact">フラグ</span></button><button class="workspace-tab" data-guide-category="all"><span class="tab-label">Guides &amp; Recipes</span><span class="tab-label-compact">ガイド</span></button><span id="workspace-context">Dear ImGui / v1.93.0</span></div>
   <section class="hero" id="hero">
     <div class="hero-copy"><p class="eyebrow"><span></span> THE VISUAL API REFERENCE</p><h1>関数の先にある画面を、<br><em>見て理解する。</em></h1><p class="hero-description">Dear ImGuiの関数を、日本語と実際の表示で。<br>ウィジェットから描画・入力・フォントまで、<br>欲しい機能と使い方をすぐに探せます。</p><div class="hero-stats" id="hero-stats"></div><a class="start-link" href="#reference">関数を調べる <span>↓</span></a></div>
     <figure class="hero-figure"><div class="figure-top"><span><i></i><i></i><i></i></span><small>ACTUAL RENDER · 1.93.0</small></div><img id="hero-image" alt="ImGui v1.93.0で入力欄・チェックボックス・スライダーを組み合わせた実際の描画" width="800" height="520"><figcaption><span class="live-dot"></span> 実際のImGuiで描画した画面 <span>800 × 520</span></figcaption></figure>
   </section>
   <section class="reference" id="reference" aria-labelledby="reference-title">
-    <div class="section-heading"><div><p class="eyebrow" id="section-eyebrow">API REFERENCE</p><h2 id="reference-title">関数一覧</h2><p id="reference-intro" class="reference-intro">関数を選ぶと、使い方・引数・注意点・表示例を確認できます。</p></div><span class="result-count" id="result-count" aria-live="polite"></span></div>
+    <div class="section-heading"><div><p class="eyebrow" id="section-eyebrow">API REFERENCE</p><h2 id="reference-title">関数一覧</h2></div><span class="result-count" id="result-count" aria-live="polite"></span></div>
     <div class="search-row"><label class="searchbox"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><input id="search" type="search" placeholder="関数名・日本語・引数で検索…" autocomplete="off" aria-label="関数を検索"><kbd>/</kbd></label><button id="reset" class="reset" title="絞り込みを解除">リセット</button></div>
-    <p id="search-help" class="search-help" aria-live="polite">ひらがな・カタカナ・全角半角に対応しています。</p>
     <div class="filter-row"><div class="filters" role="group" aria-label="関数の種類"><button data-filter="all" class="filter active">すべて</button><button data-filter="visual" class="filter">表示・ウィジェット</button><button data-filter="utility" class="filter">状態・補助処理</button><button data-filter="obsolete" class="filter">互換API</button><button data-filter="internal" class="filter">内部用</button></div><div class="sort-controls"><button id="frequency-sort" class="frequency-sort active" aria-pressed="true">使用頻度順 ↓</button><label class="sort-label">並び順 <select id="sort"><option value="frequency">使用頻度順</option><option value="source">ヘッダー順</option><option value="name">名前順</option></select></label></div></div>
-    <p class="frequency-note" id="frequency-note">よく使う関数を優先して表示中。使用頻度「高」「中」は一般的なUI実装での出番の目安です。実測統計ではありません。</p>
-    <div class="reference-controls"><label>対象<select id="branch-select"><option value="all">標準・Docking・拡張</option><option value="core">標準版</option><option value="docking">Docking専用</option><option value="extension">外部拡張</option></select></label><div class="view-switch" aria-label="一覧の表示形式"><button id="view-list" aria-pressed="true">一覧</button><button id="view-cards" aria-pressed="false">カード</button></div><button class="guide-shortcut" data-guide-category="all">初めて使う方へ → 入門ガイド</button></div>
+    <div class="reference-controls"><label><span class="control-caption">対象</span><select id="branch-select" aria-label="APIの対象"><option value="all">標準・Docking・拡張</option><option value="core">標準版</option><option value="docking">Docking専用</option><option value="extension">外部拡張</option></select></label><div class="view-switch" aria-label="一覧の表示形式"><button id="view-list" aria-pressed="true">一覧</button><button id="view-cards" aria-pressed="false">カード</button></div><button class="guide-shortcut" data-guide-category="all">初めて使う方へ → 入門ガイド</button></div>
     <div id="flag-index-controls" class="flag-index-controls" hidden><div id="flag-category-filters" class="flag-category-filters" role="group" aria-label="フラグのカテゴリ"></div><label class="flags-select-label">表示対象<select id="flag-index-visibility"><option value="public">通常の公開値</option><option value="all">すべて</option><option value="obsolete">互換名</option><option value="internal">内部用</option></select></label></div>
     <div id="cards" class="cards"></div>
     <div id="empty" class="empty" hidden><div>⌕</div><h3>一致する関数がありません</h3><p>関数名の一部や、別の日本語でも検索できます。</p><button id="empty-reset" class="primary">絞り込みを解除する</button></div>
@@ -1050,9 +1131,21 @@ globalThis.IMGUI_DOCS_SEARCH = (() => {
     $('#contrast-toggle').setAttribute('aria-checked',enhanced);
     $('#contrast-status').textContent=enhanced?'オン':'オフ';
   }
-  function closeExplorer() {
+  const mobileLayout=window.matchMedia('(max-width:1000px)');
+  function closeExplorer(returnFocus=false) {
+    const wasOpen=document.body.classList.contains('explorer-open');
     document.body.classList.remove('explorer-open');$('#explorer-toggle').setAttribute('aria-expanded','false');$('#explorer-backdrop').hidden=true;
+    $('#explorer-toggle').setAttribute('aria-label','メニューを開く');
+    $('#explorer').removeAttribute('role');$('#explorer').removeAttribute('aria-modal');
+    if(returnFocus&&wasOpen&&mobileLayout.matches)$('#explorer-toggle').focus({preventScroll:true});
   }
+  function openExplorer() {
+    if(!mobileLayout.matches)return;
+    $('#display-settings').open=false;
+    document.body.classList.add('explorer-open');$('#explorer-toggle').setAttribute('aria-expanded','true');$('#explorer-toggle').setAttribute('aria-label','メニューを閉じる');$('#explorer-backdrop').hidden=false;
+    $('#explorer').setAttribute('role','dialog');$('#explorer').setAttribute('aria-modal','true');$('#explorer-close').focus({preventScroll:true});
+  }
+  mobileLayout.addEventListener('change',()=>closeExplorer());
   updateTheme();
   updateContrast();
 
@@ -1157,18 +1250,16 @@ globalThis.IMGUI_DOCS_SEARCH = (() => {
     $('#cards').classList.toggle('flags-reference',flagMode);
     $('#cards').innerHTML = current.map(flagMode?flagTypeRow:guideMode?guideCard:gallery?galleryCard:state.presentation==='list'?row:card).join('');
     $('#empty').hidden = result.length > 0;
-    $('#search-help').textContent=searchFallback?'近い表記の候補を表示しています。ひらがな・カタカナ・全角半角にも対応しています。':'ひらがな・カタカナ・全角半角に対応。例：ぼたん ／ がぞう ひょうじ。打ち間違いがある場合は近い候補も探します。';
-    $('#search-help').classList.toggle('search-expanded',searchFallback);
-    $('#search-help').dataset.fuzzy=String(searchFallback);
     const declarations = groupsResult.reduce((n,g) => n + g.entries.filter(matchesEntry).length, 0);
     $('#result-count').innerHTML = flagMode?`<b>${result.length}</b> 種類 <span>／ <b>${result.reduce((n,r)=>n+r.matches.length,0)}</b> 値</span>`:guideMode?`<b>${result.length}</b> 件のガイド`:gallery ? `<b>${result.length}</b> 枚のキャプチャ` : `<b>${result.length}</b> 関数名 <span>／ <b>${declarations}</b> 宣言</span>`;
+    $('#result-count').dataset.fuzzy=String(searchFallback);
+    if(searchFallback)$('#result-count').insertAdjacentHTML('beforeend','<span class="search-result-hint">近い候補</span>');
     if(flagMode)$('#result-count').insertAdjacentHTML('beforeend',`<small class="index-context">表示中（${esc($('#flag-index-visibility').querySelector(`[value="${state.flagVisibility}"]`).textContent)}） · 全${stats.flag_types}種類 / ${stats.flag_values}値を収録</small>`);
     if(guideMode&&state.query.trim())$('#result-count').insertAdjacentHTML('beforeend',`<button class="related-link search-api-shortcut" data-search-api>関数一覧でも「${esc(state.query.trim())}」を探す →</button>`);
     $('#reference-title').textContent = flagMode?(state.flagCategory==='all'?'フラグ一覧':flagCategories.get(state.flagCategory)+'のフラグ'):guideMode?(state.guideCategory==='all'?'入門・使い方ガイド':guideLabels.get(state.guideCategory)):gallery ? 'キャプチャから探す' : state.category === 'all' ? (state.branch==='docking'?'Docking専用API':state.branch==='extension'?'外部拡張API':'関数一覧') : labelMap.get(state.category);
     $('#section-eyebrow').textContent = flagMode?'FLAG REFERENCE':guideMode?'GUIDES & RECIPES':gallery ? 'CAPTURE GALLERY' : 'API REFERENCE';
     $('#search').placeholder = flagMode?'フラグの型名・値の名前・日本語で検索…':guideMode?'知りたいこと・エラー・使い方で検索…':gallery ? '表示例・関数名・日本語で検索…' : '関数名・日本語・引数で検索…';
     $('#search').setAttribute('aria-label',flagMode?'フラグを検索':guideMode?'ガイドを検索':'関数を検索');
-    $('#reference-intro').textContent=flagMode?'フラグは、関数の動作や表示を選ぶための設定です。種類を選ぶと、各値の意味・コード例・組み合わせ方・注意点を確認できます。':guideMode?`全${guides.length}本。はじめての設定画面から、ゲームエンジンのエディター・デバッグ道具・独自の表現まで、小さな例を動かしながら学べます。`:'関数を選ぶと、使い方・引数・注意点・表示例を確認できます。';
     $('#empty h3').textContent=flagMode?'一致するフラグがありません':guideMode?'一致するガイドがありません':'一致する関数がありません';
     $('#empty p').textContent=flagMode?'フラグ名の一部や別の日本語で検索するか、表示対象を変更してください。':'名前の一部や、別の日本語でも検索できます。';
     $$('.category').forEach(b => {b.classList.toggle('active', b.dataset.category === state.category);b.setAttribute('aria-pressed',b.dataset.category === state.category);});
@@ -1178,8 +1269,6 @@ globalThis.IMGUI_DOCS_SEARCH = (() => {
     $('#frequency-sort').hidden=gallery||guideMode||flagMode;
     $('#frequency-sort').classList.toggle('active',state.sort==='frequency');
     $('#frequency-sort').setAttribute('aria-pressed',state.sort==='frequency');
-    $('#frequency-note').hidden=gallery||guideMode||flagMode||state.sort!=='frequency';
-    $('#frequency-note').textContent=state.query.trim()?'検索語に近い名前・説明を優先し、同じ関連度では使用頻度の目安で並べています。':'よく使う関数を優先して表示中。使用頻度「高」「中」は一般的なUI実装での出番の目安です。実測統計ではありません。';
     $('#sort').value=state.sort;
     $('.filter-row').hidden=guideMode||flagMode;$('.reference-controls').hidden=gallery||guideMode||flagMode;$('#guide-filters').hidden=!guideMode;
     $('#guide-paths').hidden=!guideMode||state.guideCategory!=='all'||!!state.query||state.guideLevel!=='all';$('#guide-level').value=state.guideLevel;
@@ -1371,9 +1460,11 @@ globalThis.IMGUI_DOCS_SEARCH = (() => {
     return `<details class="variant" id="variant-${e.id}" ${selected?'open':''}><summary><code>${esc(e.signature)}</code>${branchBadge(e)}${e.obsolete?'<span class="badge legacy">互換</span>':''}${e.internal?'<span class="badge internal">内部</span>':''}</summary><div class="variant-content">${selected?'':`<p>${prose(e.description)}</p>`}${parameters}<div class="return-line"><strong>戻り値</strong><p>${prose(e.returns)}</p></div><div class="source-row"><a href="${e.source}" target="_blank" rel="noopener">公式の定義を見る ↗</a>${e.capture_explanation?`<button class="related-link" data-open="${esc(e.qualified)}" data-entry="${e.id}">この宣言の表示例を見る ↑</button>`:''}<button class="copy-button" data-signature="${e.id}">宣言をコピー</button><button class="copy-button" data-variant-link="${e.id}">この宣言へのリンク</button></div>${e.comment?`<details class="source-comment"><summary>公式ヘッダーのコメント</summary><p>${esc(e.comment)}</p></details>`:''}</div></details>`;
   }
   function showDetail() {
+    closeExplorer();$('#display-settings').open=false;
     if (!detail.open) detail.show();
     document.body.classList.add('dialog-open');
     detail.scrollTop=0;
+    $('#detail-close').focus({preventScroll:true});
     enterMotion($('#detail-content'),6,190);
   }
   function openGroup(qualified, selectedId = null, updateHash = true) {
@@ -1442,8 +1533,9 @@ globalThis.IMGUI_DOCS_SEARCH = (() => {
   $('#detail-close').addEventListener('click',()=>closeDetail());
   $('#image-close').addEventListener('click',()=>imageDialog.close());
   $('#about-close').addEventListener('click',()=>about.close());
-  $('#about-open').addEventListener('click',()=>{about.showModal();updateBody();});
-  $('#about-footer').addEventListener('click',()=>{about.showModal();updateBody();});
+  function openAbout(){closeExplorer();$('#display-settings').open=false;about.showModal();updateBody();}
+  $('#about-open').addEventListener('click',openAbout);
+  $('#about-footer').addEventListener('click',openAbout);
   $('#copy-link').addEventListener('click',()=>copy(location.href));
   $('#contrast-toggle').addEventListener('click',()=>{
     const contrast=document.documentElement.dataset.contrast==='normal'?'enhanced':'normal';
@@ -1461,9 +1553,10 @@ globalThis.IMGUI_DOCS_SEARCH = (() => {
     }
   });
   $('#explorer-toggle').addEventListener('click',()=>{
-    const open=!document.body.classList.contains('explorer-open');document.body.classList.toggle('explorer-open',open);$('#explorer-toggle').setAttribute('aria-expanded',open);$('#explorer-backdrop').hidden=!open;
+    if(document.body.classList.contains('explorer-open'))closeExplorer(true);else openExplorer();
   });
-  $('#explorer-backdrop').addEventListener('click',closeExplorer);
+  $('#explorer-backdrop').addEventListener('click',()=>closeExplorer(true));
+  $('#explorer-close').addEventListener('click',()=>closeExplorer(true));
   $('#branch-select').addEventListener('change',event=>{state.branch=event.target.value;state.page=1;render(true);});
   $('#view-list').addEventListener('click',()=>{state.presentation='list';render(true);});
   $('#view-cards').addEventListener('click',()=>{state.presentation='cards';render(true);});
@@ -1474,6 +1567,12 @@ globalThis.IMGUI_DOCS_SEARCH = (() => {
   $('#frequency-sort').addEventListener('click',()=>{state.sort='frequency';state.page=1;render(true);});
   $('#reset').addEventListener('click',reset);$('#empty-reset').addEventListener('click',reset);
   document.addEventListener('keydown',event=>{
+    if(event.key==='Tab'&&document.body.classList.contains('explorer-open')){
+      const focusable=$$('button:not([disabled]),a[href],input,select,summary',$('#explorer')).filter(e=>e.getClientRects().length);
+      const first=focusable[0],last=focusable.at(-1),outside=!$('#explorer').contains(document.activeElement);
+      if(event.shiftKey&&(document.activeElement===first||outside)){event.preventDefault();last?.focus();return;}
+      if(!event.shiftKey&&(document.activeElement===last||outside)){event.preventDefault();first?.focus();return;}
+    }
     if(event.key==='Escape'&&$('#display-settings').open){event.preventDefault();event.stopPropagation();$('#display-settings').open=false;$('#display-settings summary').focus();return;}
     if(event.key==='Escape'&&!imageDialog.open&&!about.open){
       if(document.body.classList.contains('explorer-open')){event.preventDefault();closeExplorer();$('#explorer-toggle').focus();return;}
@@ -1483,6 +1582,8 @@ globalThis.IMGUI_DOCS_SEARCH = (() => {
   });
   document.addEventListener('click',event=>{
     if($('#display-settings').open&&!$('#display-settings').contains(event.target))$('#display-settings').open=false;
+    if(event.target.closest('#display-settings>summary,.brand'))closeExplorer();
+    if(event.target.closest('[data-about-open]')){openAbout();return;}
     if(event.target.closest('[data-search-api]')){const query=state.query;openBranch('all');state.query=query;$('#search').value=query;render(true);return;}
     const guide=event.target.closest('[data-guide]');if(guide){event.preventDefault();openGuide(guide.dataset.guide);return;}
     const guideCategory=event.target.closest('[data-guide-category]');if(guideCategory){event.preventDefault();openGuideIndex(guideCategory.dataset.guideCategory);return;}
