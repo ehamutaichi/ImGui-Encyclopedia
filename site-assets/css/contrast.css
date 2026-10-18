@@ -1,0 +1,49 @@
+/* 強めの配色も少し和らげ、最初の淡い配色と独立して切り替えられるようにする。 */
+:root{
+  --text:#e9edf4;--body-ink:#e1e7f0;--muted:#b9c3d2;
+  --line:#52627a;--outline-soft:#46566e;
+  --tone-usage-line:#567d60;
+}
+:root[data-theme="light"]{
+  --text:#24282e;--body-ink:#262a30;--muted:#4d5560;
+  --line:#99a4b3;--outline-soft:#aeb8c6;
+  --tone-info-line:#8eaccb;--tone-usage-line:#8eae98;
+  --tone-parameter-line:#bea154;--tone-warning-line:#cc966f;
+  --tone-error-line:#c78c9b;--tone-result-line:#af95cc;
+}
+/* オフのときは、濃くする前の本文と境界線の色へ戻す。 */
+:root[data-contrast="normal"]{
+  --text:#dfe6f2;--body-ink:#d2dcec;--muted:#a9b6cb;
+  --line:#343e50;--outline-soft:#2b3444;
+  --tone-usage-line:#496f53;
+}
+:root[data-theme="light"][data-contrast="normal"]{
+  --text:#263246;--body-ink:#344258;--muted:#57667c;
+  --line:#cbd4e2;--outline-soft:#e0e5ef;
+  --tone-info-line:#a8c6e5;--tone-usage-line:#a4cbb0;
+  --tone-parameter-line:#d6bc71;--tone-warning-line:#e2b18b;
+  --tone-error-line:#dca6b2;--tone-result-line:#c6afe3;
+}
+/* 設定は本文を覆わない上部から開き、狭い画面でも項目名を省略しない。 */
+.display-settings{position:relative;flex-shrink:0;color:var(--text)}
+.display-settings>summary{display:flex;align-items:center;gap:6px;list-style:none;cursor:pointer;font-size:12px;font-weight:600;line-height:1.6;padding:7px 10px;border:1px solid var(--line);border-radius:9px;background:var(--surface-container);white-space:nowrap}
+.display-settings>summary::-webkit-details-marker{display:none}
+.display-settings>summary:hover,.display-settings[open]>summary{background:var(--notice);color:var(--accent)}
+.display-settings-symbol{font-size:16px;line-height:1}
+.display-settings-panel{position:absolute;top:calc(100% + 13px);right:0;width:294px;max-width:calc(100vw - 24px);padding:17px;border:1px solid var(--line);border-radius:12px;background:var(--surface-raised);box-shadow:var(--shadow-2);z-index:30;white-space:normal}
+.display-settings-heading{font-size:12px;font-weight:700;color:var(--text);margin:0 0 11px}
+#contrast-toggle{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left;color:var(--body-ink);background:var(--surface-container);border:1px solid var(--line);border-radius:9px;padding:11px 12px}
+#contrast-toggle:hover{background:var(--surface-hover)}
+.contrast-copy{display:flex;flex-direction:column;gap:2px;min-width:0}
+.contrast-label{font-size:13px;font-weight:600;line-height:1.8}
+.contrast-status{font-size:11px;font-weight:400;color:var(--muted)}
+.contrast-switch{position:relative;display:block;flex-shrink:0;width:36px;height:22px;border:1px solid var(--muted);border-radius:20px;background:var(--surface)}
+.contrast-switch::before{content:"";position:absolute;left:3px;top:3px;width:14px;height:14px;border-radius:50%;background:var(--muted);transition:transform var(--motion-fast) var(--motion-easing)}
+#contrast-toggle[aria-checked="true"] .contrast-switch{background:var(--accent);border-color:var(--accent)}
+#contrast-toggle[aria-checked="true"] .contrast-switch::before{transform:translateX(14px);background:var(--bg)}
+#contrast-help{font-size:12px;line-height:1.9;color:var(--muted);margin:10px 0 0}
+@media(max-width:720px){
+  .display-settings>summary{font-size:11px;padding:5px 7px;gap:4px}.display-settings-label{font-size:0}.display-settings-label::after{content:"表示";font-size:11px}
+  .display-settings-panel{right:-38px;top:calc(100% + 12px)}
+}
+@media(prefers-reduced-motion:reduce){.contrast-switch::before{transition:none}}

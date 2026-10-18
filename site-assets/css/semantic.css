@@ -1,0 +1,114 @@
+/* 同系色の明暗だけに頼らず、説明の役割を色とラベルの両方で示す。 */
+:root{
+  --text:#f3f4f6;--body-ink:#f1f3f6;--muted:#d9dde5;
+  --line:#66748b;--outline-soft:#5e6c82;
+  --tone-info:#9acaff;--tone-info-bg:#20324a;--tone-info-line:#446788;
+  --tone-usage:#a5d8b2;--tone-usage-bg:#21382a;--tone-usage-line:#628b6c;
+  --tone-parameter:#f1cf83;--tone-parameter-bg:#3a311f;--tone-parameter-line:#88703b;
+  --tone-warning:#ffbc8b;--tone-warning-bg:#3d2c22;--tone-warning-line:#95603c;
+  --tone-error:#ffa3b2;--tone-error-bg:#3b252e;--tone-error-line:#975668;
+  --tone-result:#d5bbff;--tone-result-bg:#322840;--tone-result-line:#775a9a;
+}
+:root[data-theme="light"]{
+  --text:#111111;--body-ink:#111111;--muted:#292929;
+  --line:#7d8796;--outline-soft:#87909e;
+  --tone-info:#215e98;--tone-info-bg:#edf5ff;--tone-info-line:#6888ad;
+  --tone-usage:#28633d;--tone-usage-bg:#edf8ef;--tone-usage-line:#6c9076;
+  --tone-parameter:#775400;--tone-parameter-bg:#fff6dc;--tone-parameter-line:#a88a35;
+  --tone-warning:#974411;--tone-warning-bg:#fff1e7;--tone-warning-line:#b77a4f;
+  --tone-error:#a02d43;--tone-error-bg:#ffedf1;--tone-error-line:#b3697c;
+  --tone-result:#65408e;--tone-result-bg:#f4eeff;--tone-result-line:#9776b6;
+}
+/* 通常の文章は中性色で読み、線と色付き見出しで操作や意味を見分ける。 */
+.reference-intro,.row-summary,.card-description,.card-subtitle,.gallery-caption,
+.guide-card p,.detail-header .japanese-title,.detail-description,
+.variant-content>p,.params td,.guide-body p,.guide-body li,.guide-body .guide-summary,
+.guide-table td,.api-notes p,.api-notes li,.flag-group-description,.flag-value>p,
+.flags-header>p:not(.eyebrow),.flag-reference-header>p:not(.eyebrow),
+.flag-type-description,.about-content p{color:var(--body-ink)}
+/* 入力欄や押せる部品の輪郭を、背景から見分けられる濃さにする。 */
+.theme-toggle,.filter,.guide-category,.frequency-sort,.frequency-sort.active,
+.version{border:1px solid var(--line)}
+.api-card,.guide-card,.cards.list-view,.searchbox,.variant,.flag-group,.flag-value,
+.reference-controls select,.flags-select-label select,.view-switch,.pagination button,
+.icon-button,.copy-button,.related-link,.image-open,pre.code,.inline-code{border-color:var(--line)}
+.api-row{border-bottom-color:var(--line)}
+.topbar,.sidebar,.workspace-tabs,.workspace-tab,.explorer-section,
+.sidebar-line,.sidebar-foot,.dialog-bar,.variants,.api-notes,footer{border-color:var(--line)}
+.api-note-box,.api-error-box,.api-check-box,.flag-group-note,.return-line{border:1px solid;border-left-width:3px}
+.api-note-box,.flag-group-note{border-color:var(--tone-warning-line)}
+.api-error-box{border-color:var(--tone-error-line)}
+.api-check-box{border-color:var(--tone-usage-line)}
+.return-line{border-color:var(--tone-result-line)}
+/* 一覧の分野は小さな色の目印で区別し、本文は読みやすい中性色を保つ。 */
+[data-topic],.category{--topic-color:var(--tone-info);--topic-bg:var(--tone-info-bg)}
+[data-topic="numeric"],[data-topic="state"],[data-topic="flags"],.category[data-category="numeric"],.category[data-category="state"]{--topic-color:var(--tone-parameter);--topic-bg:var(--tone-parameter-bg)}
+.category[data-flag-category]{--topic-color:var(--tone-parameter);--topic-bg:var(--tone-parameter-bg)}
+[data-topic="basic"],[data-topic="input"],[data-topic="dragdrop"],.category[data-category="basic"],.category[data-category="input"],.category[data-category="dragdrop"]{--topic-color:var(--tone-warning);--topic-bg:var(--tone-warning-bg)}
+[data-topic="layout"],[data-topic="tree"],[data-topic="selection"],[data-topic="image"],[data-topic="draw"],.category[data-category="layout"],.category[data-category="tree"],.category[data-category="selection"],.category[data-category="image"],.category[data-category="draw"]{--topic-color:var(--tone-usage);--topic-bg:var(--tone-usage-bg)}
+[data-topic="style"],[data-topic="font"],[data-topic="math"],[data-topic="plot"],.category[data-category="style"],.category[data-category="font"],.category[data-category="math"],.category[data-category="plot"]{--topic-color:var(--tone-result);--topic-bg:var(--tone-result-bg)}
+[data-topic="text"],[data-topic="color"],[data-topic="debug"],.category[data-category="text"],.category[data-category="color"],.category[data-category="debug"]{--topic-color:var(--tone-error);--topic-bg:var(--tone-error-bg)}
+.category[data-category]::before{content:"";width:7px;height:7px;flex-shrink:0;border-radius:50%;background:var(--topic-color);margin-right:8px}
+.category[data-category]>span:first-child{margin-right:auto}.category.active{background:var(--topic-bg);color:var(--topic-color)}.category.active .count{color:var(--topic-color)}
+.category:hover{color:var(--topic-color)}.flags-nav{color:var(--tone-parameter)}
+.api-row .symbol-icon{color:var(--topic-color);background:var(--topic-bg)}.api-row .row-function{color:var(--topic-color)}.api-row:hover{box-shadow:inset 3px 0 var(--topic-color)}
+.card-meta>span:first-child{color:var(--topic-color);font-weight:600}.detail-header[data-topic]>.eyebrow{color:var(--topic-color)}
+.detail-header[data-topic] h2{border-left:4px solid var(--topic-color);padding-left:14px}
+.branch-badge{color:var(--tone-info);background:var(--tone-info-bg);border-color:var(--tone-info-line)}
+.branch-badge.docking{color:var(--tone-result);background:var(--tone-result-bg);border-color:var(--tone-result-line)}
+.branch-badge.extension{color:var(--tone-warning);background:var(--tone-warning-bg);border-color:var(--tone-warning-line)}
+.detail-badges .badge{color:var(--tone-usage);background:var(--tone-usage-bg)}.detail-badges .badge.utility{color:var(--tone-info);background:var(--tone-info-bg)}
+.badge.legacy{color:var(--tone-warning);background:var(--tone-warning-bg)}.badge.internal{color:var(--tone-error);background:var(--tone-error-bg)}
+.function-flags>span{color:var(--tone-parameter);font-weight:600}.flag-type-link{color:var(--tone-parameter);background:var(--tone-parameter-bg);border-color:var(--tone-parameter-line)}
+.flag-type-link:hover{color:var(--tone-parameter);background:color-mix(in srgb,var(--tone-parameter) 14%,var(--tone-parameter-bg));border-color:var(--tone-parameter)}
+/* コードの入口、引数、戻り値、注意点をそれぞれ別の色にする。 */
+.code-example>.minor-heading{color:var(--tone-usage);border-left:3px solid var(--tone-usage-line);padding-left:10px}
+.code-example>pre.code{border-top:2px solid var(--tone-usage-line)}
+.code-example:first-child{margin-top:0}.related-heading{color:var(--tone-info)}
+.variants>h3{color:var(--tone-parameter);border-left:4px solid var(--tone-parameter-line);padding-left:12px}.variants>h3 span{background:var(--tone-parameter-bg);color:var(--tone-parameter)}
+.variant>summary{border-left:3px solid var(--tone-info-line)}.variant>summary code{color:var(--tone-info)}
+.params th{background:var(--tone-parameter-bg);color:var(--tone-parameter);border-bottom-color:var(--tone-parameter-line);font-weight:650}
+.params td .parameter-name{color:var(--tone-parameter);font-size:13px;font-weight:650}
+.params .parameter-type,.params .parameter-default{display:flex;align-items:baseline;gap:7px;margin-top:8px;flex-wrap:wrap}
+.parameter-type>span,.parameter-default>span{font:11px var(--font);color:var(--muted);min-width:32px}
+.params .parameter-type code{font:12px/1.8 var(--mono);color:var(--tone-info);font-weight:400;overflow-wrap:anywhere}
+.params .parameter-default code{font:12px/1.8 var(--mono);color:var(--tone-usage);background:var(--tone-usage-bg);border:1px solid var(--tone-usage-line);padding:0 5px;border-radius:4px;overflow-wrap:anywhere}
+.no-parameters{font-size:13px;color:var(--muted)}
+.return-line{display:block;border-left:3px solid var(--tone-result-line);background:var(--tone-result-bg);border-radius:0 8px 8px 0;padding:11px 14px;margin:17px 0}
+.return-line>strong{display:block;color:var(--tone-result);font-size:12px;font-weight:650;margin-bottom:4px}.return-line>p{color:var(--body-ink);font-size:13px;line-height:1.95;margin:0}
+.api-notes>h3{color:var(--tone-warning);border-left:4px solid var(--tone-warning-line);padding-left:12px}
+.api-note-box,.api-error-box,.api-check-box{padding:15px 18px;border-radius:9px;margin:17px 0;border-left:3px solid;line-height:2}
+.api-note-box{background:var(--tone-warning-bg);border-color:var(--tone-warning-line)}.api-error-box{background:var(--tone-error-bg);border-color:var(--tone-error-line)}.api-check-box{background:var(--tone-usage-bg);border-color:var(--tone-usage-line)}
+.api-note-box h4{color:var(--tone-warning)}.api-error-box h4{color:var(--tone-error)}.api-check-box h4{color:var(--tone-usage)}
+.api-note-box h4,.api-error-box h4,.api-check-box h4{font-size:14px;font-weight:650;margin:0 0 9px}
+.api-note-box p,.api-note-box li,.api-error-box p,.api-error-box li,.api-check-box p,.api-check-box li{color:var(--body-ink)}
+.api-note-box ul,.api-error-box ul,.api-check-box ul{margin:6px 0;padding-left:21px}
+.api-note-box li::marker{color:var(--tone-warning)}.api-error-box li::marker{color:var(--tone-error)}.api-check-box li::marker{color:var(--tone-usage)}
+/* 記事は章の役割を示す見出しで案内し、文章そのものには色を付け過ぎない。 */
+.guide-body>section{--section-color:var(--tone-info);--section-line:var(--tone-info-line)}
+.guide-body>section[data-tone="usage"]{--section-color:var(--tone-usage);--section-line:var(--tone-usage-line)}
+.guide-body>section[data-tone="warning"]{--section-color:var(--tone-warning);--section-line:var(--tone-warning-line)}
+.guide-body>section[data-tone="summary"]{--section-color:var(--tone-result);--section-line:var(--tone-result-line)}
+.guide-body>section>h3{color:var(--section-color);border-left:4px solid var(--section-line);border-bottom:0;padding:4px 0 4px 12px}
+.guide-body .minor-heading{color:var(--tone-usage)}.guide-table th{background:var(--tone-parameter-bg);color:var(--tone-parameter)}.guide-body .guide-summary{font-size:16px;line-height:2.1}
+.guide-body figure{width:fit-content;max-width:100%;margin:20px 0 28px}.guide-body figure img{display:block;width:auto;max-width:100%;max-height:340px;height:auto;object-fit:contain}
+.flags-header .eyebrow,.flag-group-heading .eyebrow{color:var(--tone-parameter)}.flag-group-note{background:var(--tone-warning-bg);border-left-color:var(--tone-warning-line);color:var(--body-ink)}.flag-group-note strong{color:var(--tone-warning)}
+.flag-value h4{color:var(--tone-parameter)}.flag-definition code{color:var(--tone-usage)}
+.flag-example>summary{color:var(--tone-usage)}.flag-related>summary{color:var(--tone-info)}
+.flag-value-heading .badge.utility{background:var(--tone-result-bg);color:var(--tone-result)}
+.cpp-type{color:#9ecbff}.cpp-call{color:#a0dbbd}.cpp-string{color:#f1d493}.cpp-number{color:#d2b7ff}.cpp-keyword{color:#ffadb9}.code-flag{color:#f1cf83;border-color:#8c753b}
+:root[data-theme="light"] .cpp-type{color:#245f99}:root[data-theme="light"] .cpp-call{color:#246747}:root[data-theme="light"] .cpp-string{color:#805b08}:root[data-theme="light"] .cpp-number{color:#70409b}:root[data-theme="light"] .cpp-keyword{color:#a13c55}:root[data-theme="light"] .code-flag{color:#775400;border-color:#b79b4d}
+.capture-details{margin-top:18px}.capture-details>summary{font-size:12px;color:var(--muted);cursor:pointer}.capture-details .provenance{margin-top:10px}
+.about-verification-notes{margin:22px 0;padding:13px 16px;border:1px solid var(--line);border-radius:9px;background:var(--surface-container)}.about-verification-notes>summary{font-size:13px;color:var(--muted);cursor:pointer}.about-verification-notes li{font-size:13px;line-height:1.95;color:var(--body-ink)}
+.guide-card[data-topic="extensions"]{border-top:3px solid var(--tone-warning-line)}.guide-card[data-topic="docking"]{border-top:3px solid var(--tone-result-line)}
+@media(max-width:720px){
+  .detail-header[data-topic] h2{padding-left:10px;border-left-width:3px}.params td .parameter-name{font-size:12px}.params .parameter-type code,.params .parameter-default code{font-size:11px}
+  .parameter-type>span,.parameter-default>span{font-size:10px}.api-note-box,.api-error-box,.api-check-box{padding:13px 14px}.guide-body>section>h3{padding-left:10px}.guide-body .guide-summary{font-size:15px}
+}
+/* 要点は太字、守る条件は下線、重大な誤りにつながる箇所は赤と太字で示す。 */
+strong.prose-key,strong.prose-rule,strong.prose-critical{font-weight:700;line-height:inherit;cursor:inherit;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+strong.prose-key,strong.prose-rule{color:var(--body-ink)}
+strong.prose-rule{text-decoration-line:underline;text-decoration-style:solid;text-decoration-color:var(--tone-parameter);text-decoration-thickness:1.5px;text-underline-offset:.18em;text-decoration-skip-ink:auto}
+strong.prose-critical{color:var(--tone-error)}
+/* 文章内のコードを強調する場合も、本文と同じ強さ・意味の色で読めるようにする。 */
+strong.prose-key .inline-code,strong.prose-rule .inline-code,strong.prose-critical .inline-code{font-weight:inherit;color:inherit}

@@ -1,0 +1,35 @@
+/* 本文と補助情報の文字を少し大きくし、広い行間と明るさを保つ。 */
+body{font-size:16px;line-height:1.85}
+.brand{font-size:17px}.brand b{font-size:13px}.nav-link{font-size:14px}.topbar nav{gap:23px}
+.category{font-size:14px;padding-top:9px;padding-bottom:9px}.count{font-size:12px}.nav-caption{font-size:11px}
+.sidebar-foot{font-size:12px}.sidebar-foot small{font-size:11px}
+.hero-description{font-size:14px;line-height:2.1}.eyebrow{font-size:11px}.stat small{font-size:12px}.start-link{font-size:13px}
+.hero-figure figcaption{font-size:11px}.hero-figure figcaption>span:last-child{font-size:10px}.figure-top small{font-size:10px}
+.section-heading h2{font-size:26px}.section-heading .eyebrow{font-size:11px}.result-count{font-size:13px}
+.searchbox input{font-size:14px}.reset{font-size:13px}.filter{font-size:12px}.filter-row{flex-wrap:wrap}
+.sort-label,.sort-label select,.frequency-sort{font-size:12px}.sort-label select{max-width:125px}
+.capture-note,.frequency-note{font-size:12px;line-height:2}.frequency-badge{font-size:11px}
+.card-meta{font-size:11px}.overload-count{font-size:11px}.scope{font-size:11px}.card-title{font-size:16px}
+.card-subtitle{font-size:14px}.card-description{font-size:12px;line-height:1.95;color:#a0b3cc}.card-bottom{font-size:11px}.image-badge{font-size:10px}
+.gallery-caption{font-size:13px}.gallery-title{font-size:14px}.pagination button,.pagination span{font-size:12px}.pagination button{min-width:37px;height:37px}
+.dialog-bar{font-size:12px}.icon-button,.copy-button{font-size:12px}.badge{font-size:11px}
+.detail-header .eyebrow{font-size:12px}.detail-header .japanese-title{font-size:17px}.detail-description{font-size:14px;line-height:2.1;color:#bfcee2}
+.detail-image figcaption{font-size:12px;line-height:2}.relation{font-size:12px;line-height:2}.minor-heading{font-size:14px}.minor-heading small{font-size:12px}
+pre.code{font-size:14px;line-height:1.9}.sample-note{font-size:12px;line-height:2}.related-link{font-size:12px;line-height:1.7}
+.variants>h3{font-size:17px}.variants>h3 span{font-size:12px}.variant>summary code{font-size:13px;line-height:1.9}.variant-content>p{font-size:14px;line-height:2}
+.params{font-size:13px}.params td{font-size:13px;line-height:2;color:#bdcce2}.params td code{font-size:13px}.params td small{font-size:12px;line-height:1.9}
+.return-line,.return-line strong,.source-row,.source-comment,.source-comment p{font-size:13px}.provenance{font-size:11px;line-height:2}
+.about-content p{font-size:14px;line-height:2.1}.about-content h3{font-size:17px}.about-content code{font-size:13px}.license{font-size:11px}footer{font-size:12px}
+@media(max-width:1190px){.topbar nav{gap:17px}.nav-link{font-size:13px}.category{font-size:13px}}
+@media(max-width:960px){.hero-description{font-size:14px}.card-title{font-size:16px}.detail-description{font-size:14px}}
+@media(max-width:690px){
+  .topbar{gap:8px}.brand{font-size:13px}.topbar nav{gap:10px}.topbar nav .nav-link{font-size:11px}.topbar .brand-mark{width:29px;height:31px}
+  .sidebar .category{font-size:13px}.hero-description{font-size:13px}.hero-copy .eyebrow{font-size:9px}.stat small{font-size:10px}
+  .hero-figure figcaption{font-size:10px}.section-heading h2{font-size:23px}.result-count{font-size:11px}
+  .filters{gap:4px}.filter{font-size:11px;padding:6px}.capture-note,.frequency-note{font-size:11px}.sort-label,.sort-label select,.frequency-sort{font-size:12px}
+  .card-meta,.overload-count{font-size:10px}.scope{font-size:10px}.card-title{font-size:14px}.card-subtitle{font-size:13px}.card-description{font-size:12px}.card-bottom{font-size:10px}.image-badge{font-size:9px}
+  .detail-header .japanese-title{font-size:16px}.dialog-bar{font-size:10px}.icon-button,.copy-button{font-size:11px}
+  .detail-description,.variant-content>p{font-size:14px}.detail-image figcaption{font-size:12px}.relation,.sample-note{font-size:12px}.minor-heading{font-size:13px}
+  pre.code{font-size:13px;line-height:1.9}.variant>summary code{font-size:12px}.params td,.params td code{font-size:12px}.params td small{font-size:11px}.params th{font-size:12px}
+  .related-link,.return-line,.return-line strong,.source-row,.source-comment,.source-comment p{font-size:12px}.provenance{font-size:10px}.about-content p{font-size:13px}.pagination button,.pagination span{font-size:11px}footer{font-size:11px}
+}
