@@ -63,9 +63,9 @@
 .reference-navigation .explorer-link.active>span{color:var(--accent)}
 .flag-index-controls{display:flex;align-items:flex-end;flex-wrap:wrap;gap:16px;margin:18px 0 22px}
 .flag-category-filters{display:flex;align-items:center;flex-wrap:wrap;gap:7px;flex:1;min-width:0}
-.flag-category-filters .flag-category{border:1px solid var(--line);border-radius:20px;background:var(--surface-raised);color:var(--body-ink);font:500 12px/1.7 var(--font);padding:6px 12px;text-align:left}
-.flag-category-filters .flag-category:hover{background:var(--surface-hover);border-color:var(--tone-parameter);color:var(--tone-parameter)}
-.flag-category-filters .flag-category.active{background:var(--tone-parameter-bg);border-color:var(--tone-parameter-line);color:var(--tone-parameter);font-weight:650;box-shadow:var(--shadow-1)}
+.flag-category-filters :is(.flag-category,.type-category){border:1px solid var(--line);border-radius:20px;background:var(--surface-raised);color:var(--body-ink);font:500 12px/1.7 var(--font);padding:6px 12px;text-align:left}
+.flag-category-filters :is(.flag-category,.type-category):hover{background:var(--surface-hover);border-color:var(--tone-parameter);color:var(--tone-parameter)}
+.flag-category-filters :is(.flag-category,.type-category).active{background:var(--tone-parameter-bg);border-color:var(--tone-parameter-line);color:var(--tone-parameter);font-weight:650;box-shadow:var(--shadow-1)}
 .flag-index-controls>.flags-select-label{min-width:155px}
 .flag-index-controls .flags-select-label select{height:38px;padding:6px 10px;font-size:12px}
 .flag-type-row .symbol-icon{background:var(--tone-parameter-bg);color:var(--tone-parameter)}
