@@ -1,4 +1,8 @@
 /* 本文と補助情報の文字を少し大きくし、広い行間と明るさを保つ。 */
+.api-calling-contract{margin:20px 0}
+.api-calling-contract dl{margin:0}
+.api-calling-contract dt{font-weight:700;margin-top:12px}
+.api-calling-contract dd{margin:4px 0 12px;overflow-wrap:anywhere}
 body{font-size:16px;line-height:1.85}
 .brand{font-size:17px}.brand b{font-size:13px}.nav-link{font-size:14px}.topbar nav{gap:23px}
 .category{font-size:14px;padding-top:9px;padding-bottom:9px}.count{font-size:12px}.nav-caption{font-size:11px}

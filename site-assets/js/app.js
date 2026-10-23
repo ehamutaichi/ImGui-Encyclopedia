@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const {api, scenes, categories, stats, flags, types = [], guides = [], libraries = [], reference_notes = [], emphasis = {}} = window.IMGUI_DOCS;
-  let typeView;
+  let typeView,learningView,learningOrigin=null;
   const emphasisMap = new Map(Object.entries(emphasis));
   const $ = (selector, base = document) => base.querySelector(selector);
   const $$ = (selector, base = document) => [...base.querySelectorAll(selector)];
@@ -11,6 +11,13 @@
   const labelMap = new Map(categories);
   const entryMap = new Map(api.map(e => [e.id, e]));
   const guideMap = new Map(guides.map(g => [g.id, g]));
+  const courseLessons=guides.filter(g=>g.course_step).sort((a,b)=>a.course_step-b.course_step);
+  const courseStorageKey='imgui-docs-starter-completed';
+  let courseCompleted=new Set(),courseStorageAvailable=true;
+  try{
+    const saved=JSON.parse(localStorage.getItem(courseStorageKey)||'[]');
+    if(Array.isArray(saved))courseCompleted=new Set(saved.filter(id=>courseLessons.some(g=>g.id===id)));
+  }catch{courseStorageAvailable=false;}
   const guideLabels = new Map([['all','すべて'],['basics','基礎・導入'],['recipes','使い方の工夫'],['engine','ゲームエンジン'],['debugging','デバッグ道具'],['visuals','表現・カスタム描画'],['troubleshooting','注意点・トラブル対処'],['rendering','画像・描画・フォント'],['docking','Docking'],['extensions','拡張ライブラリ']]);
   const guideLevels = new Map([['beginner','入門'],['intermediate','実践'],['advanced','発展']]);
   const guidePaths = [
@@ -89,8 +96,6 @@
   $('#flag-category-filters').innerHTML=[...flagCategories].map(([id,label])=>`<button class="flag-category" data-flag-category="${id}">${esc(label)}</button>`).join('');
   const statMarkup = (value, label) => `<div class="stat"><strong>${value}</strong><small>${label}</small></div>`;
   $('#all-count').textContent = stats.names;
-  $('#hero-stats').innerHTML = statMarkup(stats.declarations,'収録した宣言') + statMarkup(stats.captures,'実行キャプチャ') + statMarkup(categories.length,'カテゴリ');
-  $('#hero-image').src = sceneMap.get('overview').url;
   $('#about-stats').innerHTML = statMarkup(stats.names,'関数名') + statMarkup(stats.declarations,'オーバーロード込み') + statMarkup(stats.captures,'実キャプチャ');
   if(reference_notes.length)$('#about-stats').insertAdjacentHTML('afterend',`<details class="about-verification-notes"><summary>バージョンと撮影条件の補足</summary>${reference_notes.map(n=>`<section><h3>${esc(n.guide_title)}：${esc(n.title)}</h3>${(n.paragraphs||[]).map(p=>`<p>${prose(p)}</p>`).join('')}${n.bullets?`<ul>${n.bullets.map(p=>`<li>${prose(p)}</li>`).join('')}</ul>`:''}${guideTable(n.table)}</section>`).join('')}</details>`);
   $('#categories').innerHTML = categories.map(([id, label]) => {
@@ -103,6 +108,14 @@
   const guidePathsSection=document.createElement('section');guidePathsSection.id='guide-paths';guidePathsSection.className='guide-paths';guidePathsSection.hidden=true;
   guidePathsSection.innerHTML=`<h3>目的から選ぶ、おすすめの読み順</h3><div class="guide-path-grid">${guidePaths.map(path=>`<article class="guide-path-card" data-topic="${path.category}"><p class="eyebrow">${esc(guideLabels.get(path.category))}</p><h4>${esc(path.title)}</h4><p>${esc(path.summary)}</p><ol>${path.steps.filter(id=>guideMap.has(id)).map(id=>`<li><button data-guide="${id}">${esc(guideMap.get(id).title)}</button></li>`).join('')}</ol><button class="guide-path-more" data-guide-category="${path.category}">この分野のガイドをすべて見る →</button></article>`).join('')}</div>`;
   guideFilters.before(guidePathsSection);
+  const courseEntry=document.createElement('section');courseEntry.id='course-entry';courseEntry.className='course-entry';
+  courseEntry.setAttribute('aria-label','初心者コース');
+  $('.section-heading').before(courseEntry);
+  function renderCourseEntry() {
+    const resume=courseLessons.find(g=>!courseCompleted.has(g.id));
+    courseEntry.innerHTML=`<div><p class="eyebrow">はじめてのDear ImGui</p><h2>小さな設定画面から、始めよう。</h2><p>起動 → 表示 → 操作 → 値の編集。8つの章を通して、コードの意味を確かめながら作れます。</p><span class="course-progress">${courseCompleted.size?`${courseCompleted.size} / ${courseLessons.length}章を読了`:'C++の基本から先へ · 動かして学ぶ入門コース'}</span></div><div class="course-entry-actions"><button class="primary" data-guide="start-here">学ぶ順番を見る →</button>${courseCompleted.size&&resume?`<button class="related-link" data-guide="${esc(resume.id)}">続きから：第${resume.course_step}章</button>`:''}</div>`;
+  }
+  renderCourseEntry();
   function updateTheme() {
     const dark=document.documentElement.dataset.theme!=='light';
     $('#theme-toggle').textContent=dark?'☀':'☾';$('#theme-toggle').setAttribute('aria-label',dark?'ライトテーマへ切り替え':'ダークテーマへ切り替え');$('#theme-toggle').setAttribute('aria-pressed',dark);
@@ -218,6 +231,20 @@
     return `<button class="api-card api-row flag-type-row" data-topic="flags" data-flag-type="${esc(g.type)}" aria-label="${esc(g.type)} — ${esc(g.title)}を解説"><div><div class="row-title"><span class="symbol-icon" aria-hidden="true">fl</span><code>${esc(g.type)}</code></div><p class="row-summary">${esc(g.title)}</p><p class="flag-type-description">${prose(g.description)}</p>${matches}</div><div class="row-meta">${g.branch==='docking'?'<span class="branch-badge docking">Docking</span>':''}${g.empty_reason?'<span class="badge internal">内部用</span>':''}<span>${esc(flagCategories.get(flagCategory(g)))}</span><span>${result.matches.length} 値</span></div></button>`;
   }
   function render(withMotion=false) {
+    document.body.dataset.docsView=state.view;
+    document.body.dataset.docsGuideCategory=state.guideCategory;
+    const learningMode=state.view==='learning';
+    $('#reference').hidden=learningMode;
+    if(!learningMode)learningView?.hide();
+    if(learningMode){
+      $('#guide-doors').hidden=true;
+      $('#api-explorer').hidden=true;$('#flags-explorer').hidden=true;$('#types-explorer').hidden=true;
+      $$('.workspace-tab,.nav-link[data-view],.explorer-link[data-view],.category').forEach(b=>b.classList.remove('active'));
+      $$('.learning-sidebar-link').forEach(b=>b.classList.add('active'));
+      window.IMGUI_DOCS_UI.refresh();
+      return;
+    }
+    $$('.learning-sidebar-link').forEach(b=>b.classList.remove('active'));
     searchFallback=false;
     const gallery = state.view === 'gallery';
     const guideMode=state.view==='guides';
@@ -248,14 +275,15 @@
     $$('.category').forEach(b => {b.classList.toggle('active', b.dataset.category === state.category);b.setAttribute('aria-pressed',b.dataset.category === state.category);});
     $$('.filter').forEach(b => {b.classList.toggle('active', b.dataset.filter === state.filter);b.setAttribute('aria-pressed',b.dataset.filter === state.filter);});
     $$('.nav-link[data-view]').forEach(b => b.classList.toggle('active',b.dataset.view === state.view));
-    $('#hero').hidden = gallery || state.category !== 'all' || !!state.query || state.filter !== 'all';
+    $('#guide-doors').hidden=!guideMode||state.guideCategory!=='all'||!!state.query;
     $('#frequency-sort').hidden=gallery||guideMode||flagMode||typeMode;
     $('#frequency-sort').classList.toggle('active',state.sort==='frequency');
     $('#frequency-sort').setAttribute('aria-pressed',state.sort==='frequency');
     $('#sort').value=state.sort;
     $('.filter-row').hidden=guideMode||flagMode||typeMode;$('.reference-controls').hidden=gallery||guideMode||flagMode||typeMode;$('#guide-filters').hidden=!guideMode;
+    courseEntry.hidden=!guideMode||state.guideCategory!=='all'||!!state.query;
     $('#guide-paths').hidden=!guideMode||state.guideCategory!=='all'||!!state.query||state.guideLevel!=='all';$('#guide-level').value=state.guideLevel;
-    $('#flag-index-controls').hidden=!flagMode;$('#api-explorer').hidden=flagMode||typeMode;$('#flags-explorer').hidden=!flagMode;
+    $('#flag-index-controls').hidden=!flagMode;$('#api-explorer').hidden=guideMode||flagMode||typeMode;$('#flags-explorer').hidden=!flagMode;
     $('#types-index-controls').hidden=!typeMode;$('#types-explorer').hidden=!typeMode;typeView.updateIndex();
     $('#flag-index-visibility').value=state.flagVisibility;
     $$('.flag-category').forEach(b=>{const active=flagMode&&b.dataset.flagCategory===state.flagCategory;b.classList.toggle('active',active);b.setAttribute('aria-pressed',active);});
@@ -272,6 +300,7 @@
       return dots+`<button data-page="${n}" class="${n===state.page?'active':''}" ${n===state.page?'aria-current="page"':''}>${n}</button>`;
     }).join('') + `<button data-page="${state.page+1}" ${state.page===pages?'disabled':''} aria-label="次のページ">→</button><span>${state.page} / ${pages}</span>`;
     if(withMotion)enterMotion($('#cards'),4,150);
+    window.IMGUI_DOCS_UI.refresh();
   }
   function reset() {
     state.category='all';state.filter='all';state.query='';state.page=1;state.branch='all';
@@ -281,6 +310,7 @@
     $('#search').value='';render(true);
   }
   function openFlagIndex(category='all', updateHash=true) {
+    learningOrigin=null;
     closeExplorer();closeDetail(false);flagsReturnHash='';
     state.view='flags';state.flagCategory=flagCategories.has(category)?category:'all';state.query='';state.page=1;
     $('#search').value='';render(true);
@@ -289,13 +319,22 @@
     $('#reference').scrollIntoView({block:'start'});
   }
   function openGuideIndex(category='all', updateHash=true) {
+    learningOrigin=null;
     closeExplorer();
     closeDetail(false);state.view='guides';state.guideCategory=guideLabels.has(category)?category:'all';state.guideLevel='all';state.query='';state.page=1;
     $('#search').value='';render(true);
     if(updateHash)history.pushState(null,'',category==='all'?'#guides':'#guides-'+category);
     $('#reference').scrollIntoView({block:'start'});
   }
+  function openLearning(panel='tasks',updateHash=true){
+    learningOrigin=null;
+    closeExplorer();closeDetail(false);state.view='learning';render();learningView.show(panel);
+    if(updateHash)history.pushState(null,'',panel==='tasks'?'#learn':'#learn-'+panel);
+    document.title='目的・使い分けから探す — Dear ImGui 日本語図鑑';
+    $('#learning-hub').scrollIntoView({block:'start'});
+  }
   function openBranch(branch='all', updateHash=true) {
+    learningOrigin=null;
     closeExplorer();
     closeDetail(false);state.view='reference';state.branch=branch;state.category='all';state.filter='all';state.query='';state.page=1;
     $('#search').value='';render(true);
@@ -356,7 +395,7 @@
     return `<table class="guide-table">${headers.length?`<thead><tr>${headers.map(h=>`<th>${prose(h)}</th>`).join('')}</tr></thead>`:''}<tbody>${(table.rows||[]).map(row=>`<tr>${row.map(cell=>`<td>${prose(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
   }
   function outline(items) {
-    return `<aside class="doc-outline" aria-label="このページの目次"><p>ON THIS PAGE</p>${items.map(([id,title])=>`<button data-doc-anchor="${esc(id)}">${esc(title)}</button>`).join('')}</aside>`;
+    return `<aside class="doc-outline" aria-label="このページの目次"><p>目次</p>${items.map(([id,title])=>`<button data-doc-anchor="${esc(id)}">${esc(title)}</button>`).join('')}</aside>`;
   }
   function wrapDocument(items) {
     const content=$('#detail-content').innerHTML;
@@ -372,8 +411,32 @@
     if(!pitfalls.length&&!checks.length&&!related.length&&!notes.example&&!notes.summary)return '';
     return `<section class="api-notes" id="api-notes"><h3>使うときの注意</h3>${notes.summary?`<p>${prose(notes.summary)}</p>`:''}${cautions.length?`<div class="api-note-box"><h4>気をつけたいこと</h4><ul>${cautions.map(v=>`<li>${prose(v)}</li>`).join('')}</ul></div>`:''}${errors.length?`<div class="api-error-box"><h4>エラーにつながるケース</h4><ul>${errors.map(v=>`<li>${prose(v)}</li>`).join('')}</ul></div>`:''}${checks.length?`<div class="api-check-box"><h4>うまく動かないときは</h4><ul>${checks.map(v=>`<li>${prose(v)}</li>`).join('')}</ul></div>`:''}${related.length?`<h4>もう少し詳しく知りたいときは</h4><div class="related-links">${related.map(g=>`<button class="related-link" data-guide="${esc(g.id)}">${esc(g.title)} →</button>`).join('')}</div>`:''}</section>`;
   }
+  function courseRoadmap() {
+    return `<section class="course-roadmap" id="course-roadmap"><h3>8章の学習ロードマップ</h3><p>各章に、試すコード・確認する結果・困ったときの対処があります。動く環境がある方は第2章から進めます。</p><ol>${courseLessons.map(g=>`<li><span class="course-step-number" aria-hidden="true">${g.course_step}</span><div><button data-guide="${esc(g.id)}">${esc(g.title.replace(/^\d+\.\s*/,''))}<span aria-hidden="true"> →</span></button><p>${prose(g.summary)}</p><small>${g.minutes}分の目安${courseCompleted.has(g.id)?' · 読了済み':''}</small></div></li>`).join('')}</ol></section>`;
+  }
+  function courseNavigation(guide, bottom=false) {
+    if(!guide.course_step)return '';
+    const index=courseLessons.findIndex(g=>g.id===guide.id),previous=courseLessons[index-1],next=courseLessons[index+1];
+    if(!bottom)return `<nav class="course-location" aria-label="コース内の現在地"><button data-guide="start-here">← 入門コースの全体像</button><span>第${guide.course_step}章 / 全${courseLessons.length}章</span><progress value="${courseCompleted.size}" max="${courseLessons.length}" aria-label="入門コースの読了数"></progress></nav>`;
+    return `<section class="course-navigation" id="course-next"><h3>${next?'確かめたら、次の章へ':'ここまでで、入門コースは完了です'}</h3><p>${next?'上の確認項目を試せたら、読了を記録して進みましょう。':'次は、作りたいものに合わせて下の関連ガイドへ進めます。必要な章へいつでも戻れます。'}</p><button class="course-complete related-link" data-course-complete="${esc(guide.id)}" aria-pressed="${courseCompleted.has(guide.id)}">${courseCompleted.has(guide.id)?'✓ 読了済み（取り消す）':'この章を読了にする'}</button><p class="course-storage-status" role="status">${courseStorageAvailable?'読了状態はこのブラウザーに保存します。':'この環境では保存できないため、読了状態はページを開いている間だけ保持します。'}</p><div class="course-navigation-links">${previous?`<button class="related-link" data-guide="${esc(previous.id)}">← ${esc(previous.title)}</button>`:'<button class="related-link" data-guide="start-here">← コースの全体像</button>'}${next?`<button class="primary" data-guide="${esc(next.id)}">次へ：${esc(next.title)} →</button>`:'<button class="primary" data-guide="start-here">全体を振り返る →</button>'}</div></section>`;
+  }
+  function toggleCourseComplete(id) {
+    if(!courseLessons.some(g=>g.id===id))return;
+    if(courseCompleted.has(id))courseCompleted.delete(id);else courseCompleted.add(id);
+    try{localStorage.setItem(courseStorageKey,JSON.stringify([...courseCompleted]));}
+    catch{courseStorageAvailable=false;}
+    const button=$('[data-course-complete]',detail);
+    if(button){
+      button.setAttribute('aria-pressed',courseCompleted.has(id));
+      button.textContent=courseCompleted.has(id)?'✓ 読了済み（取り消す）':'この章を読了にする';
+      $('.course-storage-status',detail).textContent=courseStorageAvailable?'読了状態を保存しました。':'この環境では保存できないため、読了状態はページを開いている間だけ保持します。';
+      $('progress',detail).value=courseCompleted.size;
+    }
+    renderCourseEntry();
+  }
   function openGuide(id, updateHash=true) {
     const guide=guideMap.get(id);if(!guide)return;
+    if(state.view==='learning')learningOrigin={hash:location.hash,scroll:window.scrollY};
     activeGuide=id;activeScene=null;openQualified=null;activeFlag=null;
     if(state.view!=='guides'){state.view='guides';state.guideCategory=guide.category;state.guideLevel='all';state.query='';state.page=1;$('#search').value='';render();}
     const image=sceneMap.get(guide.image_scene);
@@ -387,8 +450,10 @@
     const nextGuides=(guide.related_guides||[]).map(next=>guideMap.get(next)).filter(Boolean);
     const showOverviewImage=image&&!guide.sections.some(s=>s.capture);
     $('#detail-breadcrumb').textContent='GUIDES / '+(guideLabels.get(guide.category)||guide.category);
-    $('#detail-content').innerHTML=`<div class="detail-header" id="guide-overview"><p class="eyebrow">${esc(guideLabels.get(guide.category)||guide.category)}</p><h2 id="detail-title">${esc(guide.title)}</h2>${guideMeta(guide)}${guide.category==='extensions'?libraryVersion(guide.libraries||libraries.map(l=>l.id)):''}</div><div class="guide-body"><p class="guide-summary">${prose(guide.summary)}</p>${showOverviewImage?imageMarkup(image):''}${sections}${nextGuides.length?`<section class="guide-related-guides" id="guide-next"><h3>この次に読むなら</h3><div class="related-links">${nextGuides.map(g=>`<button class="related-link" data-guide="${esc(g.id)}">${esc(g.title)} →</button>`).join('')}</div></section>`:''}${related.length?`<section class="guide-related" id="guide-related"><h3>関連するAPIも見てみる</h3><div class="related-links">${related.map(q=>`<button class="related-link" data-open="${esc(q)}">${esc(q)}</button>`).join('')}</div></section>`:''}${sources.length?`<section id="guide-sources"><h3>もっと詳しく調べる</h3><ul class="guide-source-list">${sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title||s.url)} ↗</a></li>`).join('')}</ul></section>`:''}</div>`;
-    wrapDocument([['guide-overview','概要'],...guide.sections.map((s,i)=>[s.id||id+'-section-'+(i+1),s.title]),...(nextGuides.length?[['guide-next','次に読むガイド']]:[]),...(related.length?[['guide-related','関連API']]:[]),...(sources.length?[['guide-sources','参考資料']]:[])]);
+    $('#detail-content').innerHTML=`<div class="detail-header" id="guide-overview"><p class="eyebrow">${esc(guideLabels.get(guide.category)||guide.category)}</p><h2 id="detail-title">${esc(guide.title)}</h2>${guideMeta(guide)}${guide.category==='extensions'?libraryVersion(guide.libraries||libraries.map(l=>l.id)):''}</div><div class="guide-body">${courseNavigation(guide)}<p class="guide-summary">${prose(guide.summary)}</p>${showOverviewImage?imageMarkup(image):''}${guide.course_index?courseRoadmap():''}${sections}${courseNavigation(guide,true)}${nextGuides.length?`<section class="guide-related-guides" id="guide-next"><h3>この次に読むなら</h3><div class="related-links">${nextGuides.map(g=>`<button class="related-link" data-guide="${esc(g.id)}">${esc(g.title)} →</button>`).join('')}</div></section>`:''}${related.length?`<section class="guide-related" id="guide-related"><h3>関連するAPIも見てみる</h3><div class="related-links">${related.map(q=>`<button class="related-link" data-open="${esc(q)}">${esc(q)}</button>`).join('')}</div></section>`:''}${sources.length?`<section id="guide-sources"><h3>もっと詳しく調べる</h3><ul class="guide-source-list">${sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.title||s.url)} ↗</a></li>`).join('')}</ul></section>`:''}</div>`;
+    wrapDocument([['guide-overview','概要'],...(guide.course_index?[['course-roadmap','8章の学習ロードマップ']]:[]),...guide.sections.map((s,i)=>[s.id||id+'-section-'+(i+1),s.title]),...(guide.course_step?[['course-next','次の章へ']]:[]),...(nextGuides.length?[['guide-next','次に読むガイド']]:[]),...(related.length?[['guide-related','関連API']]:[]),...(sources.length?[['guide-sources','参考資料']]:[])]);
+    learningView.decorateGuide(guide,$('#detail-content'));
+    window.IMGUI_READER.decorate(guide,$('#detail-content'),{esc,prose,points:window.IMGUI_DOCS.learning.briefs[id]||[]});
     if(guide.image_caption&&showOverviewImage)$('figure',detail)?.insertAdjacentHTML('beforeend',`<figcaption>${prose(guide.image_caption)}</figcaption>`);
     $('#copy-link').hidden=false;showDetail();
     if(updateHash)history.pushState(null,'','#guide-'+id);
@@ -452,20 +517,26 @@
     detail.scrollTop=0;
     $('#detail-close').focus({preventScroll:true});
     enterMotion($('#detail-content'),6,190);
+    window.IMGUI_DOCS_UI.refresh();
   }
   function openGroup(qualified, selectedId = null, updateHash = true) {
     const entries=groups.get(qualified);
     if(!entries)return;
+    if(state.view==='learning')learningOrigin={hash:location.hash,scroll:window.scrollY};
     const previousGuide=guideMap.get(activeGuide);
     const preferredBranch=previousGuide?.category==='docking'?'docking':previousGuide?.category==='extensions'?'extension':state.branch;
     openQualified=qualified;activeScene=null;activeGuide=null;activeFlag=null;
-    if(state.view==='flags'||state.view==='types'){state.view='reference';state.query='';state.page=1;$('#search').value='';render();}
+    if(state.view==='flags'||state.view==='types'||state.view==='learning'){state.view='reference';state.query='';state.page=1;$('#search').value='';render();}
     const selected=entries.find(e=>e.id===selectedId) || entries.find(e=>(e.branch||'core')===preferredBranch&&!e.obsolete&&!e.internal) || entries.find(e=>!e.obsolete&&!e.internal) || entries[0];
     const s=sceneMap.get(selected.scene);
     $('#detail-breadcrumb').textContent='REFERENCE / '+labelMap.get(selected.category);
     const related = s.calls.filter(q=>q!==qualified&&groups.has(q)).slice(0,12);
     const flagTypes=[...new Set(entries.flatMap(e=>e.flag_types||[]))];
-    $('#detail-content').innerHTML=`<div class="detail-header" data-topic="${esc(selected.category)}"><p class="eyebrow">${esc(labelMap.get(selected.category))}</p><h2 id="detail-title">${esc(qualified)}</h2><p class="japanese-title">${esc(selected.title)}</p><div class="detail-badges">${badgeMarkup(selected)}</div>${selected.library?libraryVersion([selected.library]):''}</div><div class="detail-grid"><div><p class="detail-description">${prose(selected.description)}</p>${imageMarkup(s)}${selected.capture_explanation?`<p class="function-capture-explanation">${prose(selected.capture_explanation)}</p>`:''}</div><div>${sampleMarkup(s)}${related.length?`<h3 class="minor-heading related-heading" style="margin-top:22px">一緒に使うと便利な関数</h3><div class="related-links">${related.map(q=>`<button class="related-link" data-open="${esc(q)}">${esc(q)}</button>`).join('')}</div>`:''}</div></div><section class="variants"><h3>引数と戻り値 <span>${entries.length}</span></h3>${entries.map((e,i)=>variant(e,i,e.id===selected.id)).join('')}</section>`;
+    $('#detail-content').innerHTML=`<div class="detail-header" data-topic="${esc(selected.category)}"><p class="eyebrow">${esc(labelMap.get(selected.category))}</p><h2 id="detail-title">${esc(qualified)}</h2><p class="japanese-title">${esc(selected.title)}</p><div class="detail-badges">${badgeMarkup(selected)}</div>${selected.library?libraryVersion([selected.library]):''}</div><div class="detail-grid"><div><p class="detail-description">${prose(selected.description)}</p>${imageMarkup(s)}${selected.capture_explanation?`<p class="function-capture-explanation">${prose(selected.capture_explanation)}</p>`:''}</div><div>${sampleMarkup(s)}${related.length?`<h3 class="minor-heading related-heading" style="margin-top:22px">この表示例に登場する関数</h3><div class="related-links">${related.map(q=>`<button class="related-link" data-open="${esc(q)}">${esc(q)}</button>`).join('')}</div>`:''}</div></div><section class="variants"><h3>引数と戻り値 <span>${entries.length}</span></h3>${entries.map((e,i)=>variant(e,i,e.id===selected.id)).join('')}</section>`;
+    const description=$('.detail-description',detail);
+    $('.detail-header',detail).append(description);
+    $('.detail-grid',detail).insertAdjacentHTML('beforebegin',callingContractMarkup(selected));
+    learningView.decorateApi(selected,$('#detail-content'));
     const quickExample=selected.example||(selected.examples||[])[0]?.code||selected.beginner_notes?.example;
     if(quickExample){
       const sample=$('.sample-box',detail);
@@ -477,11 +548,17 @@
     $('#detail-content').insertAdjacentHTML('beforeend',noteMarkup(selected));
     const typeLink=typeView.typeButton(selected.scope);
     if(typeLink)$('#detail-content').insertAdjacentHTML('beforeend',`<section class="api-type-link"><h3>この関数を持つ型</h3>${typeLink}</section>`);
-    wrapDocument([['api-overview','できること'],['api-example','表示例とコード'],['api-signatures','引数と戻り値'],...($('#api-notes',detail)?[['api-notes','使うときの注意']]:[])]);
+    wrapDocument([['api-overview','できること'],...(selected.calling_contract?[['api-calling-contract','呼び出す順番と組み合わせ']]:[]),['api-example','表示例とコード'],['api-signatures','引数と戻り値'],...($('#api-notes',detail)?[['api-notes','使うときの注意']]:[])]);
     $('#copy-link').hidden=false;
     showDetail();
     if(updateHash)history.pushState(null,'','#'+selected.id);
     document.title=qualified+' — ImGui 1.93.0 日本語API図鑑';
+  }
+  function callingContractMarkup(entry) {
+    const contract=entry.calling_contract;
+    if(!contract)return '';
+    const related=contract.related.filter(q=>q!==entry.qualified&&groups.has(q));
+    return `<section class="api-calling-contract api-note-box" id="api-calling-contract"><h3>呼び出す順番と組み合わせ</h3><dl><dt>いつ呼ぶか</dt><dd>${prose(contract.timing)}</dd><dt>守る条件</dt><dd>${prose(contract.rule)}</dd><dt>なぜ必要か</dt><dd>${prose(contract.reason)}</dd></dl>${contract.example?`<details><summary>呼び出し順の最小例を見る</summary><p>初期化処理を省いたコード例です。下の実行画像とは別に、呼び出し方を説明しています。</p><pre class="code" tabindex="0"><code>${highlight(contract.example)}</code></pre></details>`:''}${related.length?`<div class="related-links">${related.map(q=>`<button class="related-link" data-open="${esc(q)}">${esc(q)} →</button>`).join('')}</div>`:''}</section>`;
   }
   function openScene(id, updateHash = true) {
     const s=sceneMap.get(id);if(!s)return;
@@ -492,9 +569,17 @@
     document.title=s.title+'のキャプチャ — ImGui 1.93.0';
   }
   function closeDetail(updateHash = true) {
+    if(updateHash&&learningOrigin){
+      const origin=learningOrigin;learningOrigin=null;
+      openLearning(origin.hash.slice(7)||'tasks',false);history.replaceState(null,'',origin.hash);window.scrollTo({top:origin.scroll});return;
+    }
     if(detail.open)detail.close();
-    if(updateHash&&/^#(api-|docking-|extension-|guide-|capture-|type-|member-|flags?(?:-|$))/.test(location.hash))history.replaceState(null,'',state.view==='types'?'#types':state.view==='flags'?'#flags':state.view==='gallery'?'#gallery':state.view==='guides'?(state.guideCategory==='all'?'#guides':'#guides-'+state.guideCategory):state.branch==='all'?'#reference':'#branch-'+state.branch);
+    if(updateHash&&/^#(api-|docking-|extension-|guide-|capture-|type-|member-|flags?(?:-|$))/.test(location.hash)){
+      history.replaceState(null,'',state.view==='types'?'#types':state.view==='flags'?'#flags':state.view==='gallery'?'#gallery':state.view==='guides'?(state.guideCategory==='all'?'#guides':'#guides-'+state.guideCategory):state.branch==='all'?'#reference':'#branch-'+state.branch);
+      render();
+    }
     openQualified=null;activeScene=null;activeGuide=null;activeFlag=null;document.title=state.view==='types'?'型・構造体一覧 — Dear ImGui 日本語ドキュメント':state.view==='flags'?'フラグ一覧 — Dear ImGui 日本語ドキュメント':'Dear ImGui 1.93.0 — 日本語ドキュメント';
+    window.IMGUI_DOCS_UI.refresh();
   }
   function zoom(id) {
     const s=sceneMap.get(id);if(!s)return;
@@ -572,7 +657,9 @@
     if($('#display-settings').open&&!$('#display-settings').contains(event.target))$('#display-settings').open=false;
     if(event.target.closest('#display-settings>summary,.brand'))closeExplorer();
     if(event.target.closest('[data-about-open]')){openAbout();return;}
+    const learningLink=event.target.closest('[data-learning-open]');if(learningLink){openLearning(learningLink.dataset.learningOpen);return;}
     if(event.target.closest('[data-search-api]')){const query=state.query;openBranch('all');state.query=query;$('#search').value=query;render(true);return;}
+    const completed=event.target.closest('[data-course-complete]');if(completed){toggleCourseComplete(completed.dataset.courseComplete);return;}
     const guide=event.target.closest('[data-guide]');if(guide){event.preventDefault();openGuide(guide.dataset.guide);return;}
     const guideCategory=event.target.closest('[data-guide-category]');if(guideCategory){event.preventDefault();openGuideIndex(guideCategory.dataset.guideCategory);return;}
     const branch=event.target.closest('[data-branch]');if(branch){openBranch(branch.dataset.branch);return;}
@@ -595,15 +682,26 @@
     const category=event.target.closest('[data-category]');if(category){closeExplorer();closeDetail(false);state.view='reference';state.category=category.dataset.category;state.page=1;render(true);history.replaceState(null,'','#reference');$('#reference').scrollIntoView({block:'start'});return;}
     const filter=event.target.closest('[data-filter]');if(filter){state.filter=filter.dataset.filter;state.page=1;render(true);return;}
     const page=event.target.closest('[data-page]');if(page&&!page.disabled){state.page=Number(page.dataset.page);render(true);$('#reference').scrollIntoView({block:'start'});return;}
-    const view=event.target.closest('[data-view]');if(view){event.preventDefault();if(view.dataset.view==='types'){typeView.openIndex();return;}if(view.dataset.view==='flags'){openFlagIndex();return;}closeExplorer();closeDetail(false);state.view=view.dataset.view;state.page=1;state.query='';$('#search').value='';render(true);history.pushState(null,'',state.view==='gallery'?'#gallery':'#reference');$('#reference').scrollIntoView({block:'start'});return;}
+    const view=event.target.closest('[data-view]');if(view){event.preventDefault();if(view.dataset.view==='types'){typeView.openIndex();return;}if(view.dataset.view==='flags'){openFlagIndex();return;}closeExplorer();closeDetail(false);state.view=view.dataset.view;state.page=1;state.query='';$('#search').value='';history.pushState(null,'',state.view==='gallery'?'#gallery':'#reference');render(true);$('#reference').scrollIntoView({block:'start'});return;}
   });
   function route(){
+    if(location.hash==='#learn'||location.hash.startsWith('#learn-')){openLearning(location.hash.slice(7)||'tasks',false);return;}
     const hash=decodeURIComponent(location.hash.slice(1));
     if(typeView.route(hash))return;
     if(hash==='flags'){openFlagIndex('all',false);return;}
     if(hash.startsWith('flags-')&&flagGroupMap.has(hash.slice(6))){openFlags(hash.slice(6),null,false);return;}
     if(hash.startsWith('flag-')&&flagValueMap.has(hash.slice(5))){openFlags('all',hash.slice(5),false);return;}
-    if(hash.startsWith('guide-')&&guideMap.has(hash.slice(6))){openGuide(hash.slice(6),false);return;}
+    if(hash.startsWith('guide-')){
+      const [id,sectionId]=hash.slice(6).split('@');
+      if(guideMap.has(id)){
+        openGuide(id,false);
+        if(sectionId&&guideMap.get(id).sections.some(s=>s.id===sectionId))requestAnimationFrame(()=>{
+          const target=document.getElementById(sectionId);target.scrollIntoView({block:'start'});
+          const heading=target.querySelector('h3');heading.tabIndex=-1;heading.focus({preventScroll:true});
+        });
+        return;
+      }
+    }
     if(entryMap.has(hash)){const e=entryMap.get(hash);openGroup(e.qualified,e.id,false);return;}
     if(hash.startsWith('capture-')&&sceneMap.has(hash.slice(8))){openScene(hash.slice(8),false);return;}
     closeDetail(false);
@@ -615,6 +713,7 @@
     else if(hash==='reference'){state.view='reference';render();$('#reference').scrollIntoView({block:'start'});}
   }
   window.addEventListener('hashchange',route);
+  learningView=window.IMGUI_DOCS_LEARNING.create({data:window.IMGUI_DOCS.learning,guides,api,types,flags,searchEngine,esc,prose,openGuide,openGroup,openFlags,openLearning});
   typeView=window.IMGUI_DOCS_TYPES.create({types,searchEngine,ranked,state,esc,prose,highlight,render,showDetail,closeDetail,closeExplorer,wrapDocument,copy,flagGroupMap,guideMap,onOpen(){openQualified=null;activeScene=null;activeGuide=null;activeFlag=null;}});
   render();route();
 })();

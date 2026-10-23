@@ -9,7 +9,7 @@
 <script>try{document.documentElement.dataset.theme=localStorage.getItem('imgui-docs-theme')||'dark';}catch{document.documentElement.dataset.theme='dark';}try{document.documentElement.dataset.contrast=localStorage.getItem('imgui-docs-contrast')==='normal'?'normal':'enhanced';}catch{document.documentElement.dataset.contrast='enhanced';}</script>
 <link rel="stylesheet" href="site-assets/css/style.css?v=921594f4cc4e">
 <link rel="stylesheet" href="site-assets/css/flags.css?v=414311893b82">
-<link rel="stylesheet" href="site-assets/css/readability.css?v=cfdb59dee69b">
+<link rel="stylesheet" href="site-assets/css/readability.css?v=882671f7e626">
 <link rel="stylesheet" href="site-assets/css/ide.css?v=a80d7931068d">
 <link rel="stylesheet" href="site-assets/css/material.css?v=3c0e387b852b">
 <link rel="stylesheet" href="site-assets/css/semantic.css?v=9808caaa0f6f">
@@ -17,30 +17,36 @@
 <link rel="stylesheet" href="site-assets/css/guides.css?v=50bf7cc87622">
 <link rel="stylesheet" href="site-assets/css/types.css?v=d6b9beef1a9f">
 <link rel="stylesheet" href="site-assets/css/responsive.css?v=352550ee1742">
+<link rel="stylesheet" href="site-assets/css/spacious.css?v=d22dd2de4090">
+<link rel="stylesheet" href="site-assets/css/learning.css?v=0d944db61577">
+<link rel="stylesheet" href="site-assets/css/docs-ui.css?v=5946f19ed71d">
+<link rel="stylesheet" href="site-assets/css/reader.css?v=cd9a7f95878e">
 </head>
 <body>
 <a class="skip" href="#reference">関数一覧へ移動</a>
 <header class="topbar">
   <button id="explorer-toggle" class="theme-toggle explorer-toggle" aria-label="メニューを開く" aria-controls="explorer" aria-expanded="false">☰</button>
-  <a class="brand" href="#home" aria-label="ドキュメントのホーム"><span class="brand-mark" aria-hidden="true">{ }</span><span>Dear ImGui <b>DOCS</b></span></a>
-  <nav aria-label="メイン"><a href="#reference" data-view="reference" class="nav-link active">関数</a><a href="#types" data-view="types" class="nav-link">型</a><a href="#flags" data-view="flags" class="nav-link">フラグ</a><a href="#guides" data-guide-category="all" class="nav-link">入門・使い方</a><a href="#guides-docking" data-guide-category="docking" class="nav-link">Docking</a><a href="#guides-extensions" data-guide-category="extensions" class="nav-link">拡張ライブラリ</a><a href="#gallery" data-view="gallery" class="nav-link">キャプチャ</a><button id="about-open" class="nav-link">資料情報</button></nav>
+  <a class="brand" href="#reference" aria-label="関数一覧のホーム"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 28 28" width="28" height="28"><path d="M3 5h8l3 3 3-3h8v18h-8l-3 2-3-2H3z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 8v16M6 10h5M6 14h5M17 10h5M17 14h5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span><span>Dear ImGui <b>図鑑</b></span></a>
+  <nav class="site-nav" aria-label="メイン"><a href="#reference" data-view="reference" class="nav-link workspace-tab compact-primary active"><span class="tab-label">関数リファレンス</span><span class="tab-label-compact">関数</span></a><a href="#types" data-view="types" class="nav-link workspace-tab compact-primary"><span class="tab-label">型・構造体</span><span class="tab-label-compact">型</span></a><a href="#flags" data-view="flags" class="nav-link workspace-tab compact-primary"><span class="tab-label">フラグ</span><span class="tab-label-compact">フラグ</span></a><a href="#guides" data-guide-category="all" class="nav-link workspace-tab compact-primary"><span class="tab-label">入門・使い方</span><span class="tab-label-compact">ガイド</span></a><a href="#learn" data-learning-open="tasks" class="nav-link">目的から探す</a><a href="#guides-docking" data-guide-category="docking" class="nav-link">Docking</a><a href="#guides-extensions" data-guide-category="extensions" class="nav-link">拡張ライブラリ</a><a href="#gallery" data-view="gallery" class="nav-link">キャプチャ</a><button id="about-open" class="nav-link">資料情報</button></nav>
   <details id="display-settings" class="display-settings"><summary title="表示設定" aria-label="表示設定"><span class="display-settings-symbol" aria-hidden="true">◐</span><span class="display-settings-label">表示設定</span></summary><div class="display-settings-panel"><p class="display-settings-heading">表示設定</p><button id="contrast-toggle" type="button" role="switch" aria-checked="true" aria-label="コントラストを高める"><span class="contrast-copy"><span class="contrast-label">コントラストを高める</span><span id="contrast-status" class="contrast-status">オン</span></span><span class="contrast-switch" aria-hidden="true"></span></button></div></details>
+  <button id="global-search-open" class="global-search-open" data-global-open aria-label="図鑑全体を検索（Ctrl+K）"><span aria-hidden="true">⌕</span><span class="global-search-label">図鑑を検索</span><kbd>Ctrl K</kbd></button>
   <button id="theme-toggle" class="theme-toggle" aria-label="ライトテーマへ切り替え" title="ライト／ダークを切り替える">☀</button>
-  <span class="version"><i></i> v1.93.0</span>
+  <span class="version">v1.93.0</span>
 </header>
 <div class="workspace">
 <aside class="sidebar" id="explorer" aria-label="カテゴリ">
   <div class="mobile-explorer-heading"><strong>メニュー</strong><button id="explorer-close" class="close" aria-label="メニューを閉じる">×</button></div>
-  <p class="nav-caption">EXPLORER</p>
+  <p class="nav-caption">Dear ImGui v1.93.0</p>
   <div class="explorer-section reference-navigation"><p class="explorer-heading">リファレンス</p><button class="explorer-link active" data-view="reference">関数一覧 <span>API</span></button><button class="explorer-link" data-view="types">型・構造体一覧 <span id="type-total-count"></span></button><button class="explorer-link" data-view="flags">フラグ一覧 <span id="flag-type-count"></span></button></div>
-  <div class="explorer-section"><p class="explorer-heading">はじめに読む</p><button class="explorer-link" data-guide-category="all">入門ガイド・使い方</button><button class="explorer-link" data-guide-category="troubleshooting">注意点・トラブル対処</button><button class="explorer-link" data-guide-category="rendering">画像表示・DX11 / DX12</button><button class="explorer-link" data-guide-category="docking">Dockingを使う</button><button class="explorer-link" data-guide-category="extensions">ImGuizmo / Node / Sequencer</button></div>
-  <div class="explorer-section"><p class="explorer-heading">作って学ぶ</p><button class="explorer-link" data-guide-category="engine">ゲームエンジン・エディター</button><button class="explorer-link" data-guide-category="debugging">デバッグ道具を作る</button><button class="explorer-link" data-guide-category="visuals">表現・カスタム描画</button></div>
+  <details class="explorer-section nav-section guide-navigation" open><summary>入門・使い方</summary><button class="explorer-link course-sidebar-link" data-guide="start-here">はじめてのImGui · 全8章</button><button class="explorer-link learning-sidebar-link" data-learning-open="tasks">目的・使い分けから探す</button><button class="explorer-link" data-guide-category="all">すべてのガイド</button><button class="explorer-link" data-guide-category="basics">基礎・導入</button><button class="explorer-link" data-guide-category="recipes">使い方の工夫</button><button class="explorer-link" data-guide-category="troubleshooting">注意点・トラブル対処</button><button class="explorer-link" data-guide-category="rendering">画像表示・DX11 / DX12</button><button class="explorer-link" data-guide-category="docking">Docking</button><button class="explorer-link" data-guide-category="extensions">ImGuizmo / Node / Sequencer</button></details>
+  <details class="explorer-section nav-section guide-navigation" open><summary>作って学ぶ</summary><button class="explorer-link" data-guide-category="engine">ゲームエンジン・エディター</button><button class="explorer-link" data-guide-category="debugging">デバッグ道具</button><button class="explorer-link" data-guide-category="visuals">表現・カスタム描画</button></details>
   <div id="api-explorer">
-  <div class="explorer-section"><p class="explorer-heading">APIの範囲</p><button class="explorer-link" data-branch="all">すべてのAPI</button><button class="explorer-link" data-branch="core">標準版 v1.93.0</button><button class="explorer-link" data-branch="docking">Docking専用API</button><button class="explorer-link" data-branch="extension">外部拡張API</button></div>
-  <p class="explorer-heading">APIカテゴリ</p>
+  <details class="explorer-section nav-section" open><summary>APIの範囲</summary><button class="explorer-link" data-branch="all">すべてのAPI</button><button class="explorer-link" data-branch="core">標準版 v1.93.0</button><button class="explorer-link" data-branch="docking">Docking専用API</button><button class="explorer-link" data-branch="extension">外部拡張API</button></details>
+  <details class="nav-section" open><summary>APIカテゴリ</summary>
   <button class="category active" data-category="all"><span>すべての関数</span><span class="count" id="all-count"></span></button>
   <div class="sidebar-line"></div>
   <div id="categories"></div>
+  </details>
   </div>
   <div id="types-explorer" hidden><p class="explorer-heading">型のカテゴリ</p><div id="type-categories"></div></div>
   <div id="flags-explorer" hidden><p class="explorer-heading">フラグカテゴリ</p><div id="flag-categories"></div></div>
@@ -49,16 +55,17 @@
 </aside>
 <button id="explorer-backdrop" class="explorer-backdrop" aria-label="エクスプローラーを閉じる" hidden></button>
 <main id="home">
-  <div class="workspace-tabs"><button class="workspace-tab active" data-view="reference"><span class="tab-label">API Reference</span><span class="tab-label-compact">関数</span></button><button class="workspace-tab" data-view="types"><span class="tab-label">Types &amp; Members</span><span class="tab-label-compact">型</span></button><button class="workspace-tab" data-view="flags"><span class="tab-label">Flag Reference</span><span class="tab-label-compact">フラグ</span></button><button class="workspace-tab" data-guide-category="all"><span class="tab-label">Guides &amp; Recipes</span><span class="tab-label-compact">ガイド</span></button><span id="workspace-context">Dear ImGui / v1.93.0</span></div>
-  <section class="hero" id="hero">
-    <div class="hero-copy"><p class="eyebrow"><span></span> THE VISUAL API REFERENCE</p><h1>関数の先にある画面を、<br><em>見て理解する。</em></h1><p class="hero-description">Dear ImGuiの関数を、日本語と実際の表示で。<br>ウィジェットから描画・入力・フォントまで、<br>欲しい機能と使い方をすぐに探せます。</p><div class="hero-stats" id="hero-stats"></div><a class="start-link" href="#reference">関数を調べる <span>↓</span></a></div>
-    <figure class="hero-figure"><div class="figure-top"><span><i></i><i></i><i></i></span><small>ACTUAL RENDER · 1.93.0</small></div><img id="hero-image" alt="ImGui v1.93.0で入力欄・チェックボックス・スライダーを組み合わせた実際の描画" width="800" height="520"><figcaption><span class="live-dot"></span> 実際のImGuiで描画した画面 <span>800 × 520</span></figcaption></figure>
-  </section>
+  <section class="learning-hub" id="learning-hub" hidden aria-label="目的・使い分けから探す"></section>
   <section class="reference" id="reference" aria-labelledby="reference-title">
+    <section class="guide-doors" id="guide-doors" hidden aria-label="ガイドの入口">
+      <button class="guide-door" data-guide="start-here"><span>はじめて使う</span><strong>入門8章を順番に読む →</strong></button>
+      <button class="guide-door" data-learning-open="tasks"><span>作りたいものがある</span><strong>目的から探す →</strong></button>
+      <button class="guide-door" data-learning-open="choices"><span>どれを使うか迷った</span><strong>使い分けを読む →</strong></button>
+    </section>
     <div class="section-heading"><div><p class="eyebrow" id="section-eyebrow">API REFERENCE</p><h2 id="reference-title">関数一覧</h2></div><span class="result-count" id="result-count" aria-live="polite"></span></div>
     <div class="search-row"><label class="searchbox"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><input id="search" type="search" placeholder="関数名・日本語・引数で検索…" autocomplete="off" aria-label="関数を検索"><kbd>/</kbd></label><button id="reset" class="reset" title="絞り込みを解除">リセット</button></div>
     <div class="filter-row"><div class="filters" role="group" aria-label="関数の種類"><button data-filter="all" class="filter active">すべて</button><button data-filter="visual" class="filter">表示・ウィジェット</button><button data-filter="utility" class="filter">状態・補助処理</button><button data-filter="obsolete" class="filter">互換API</button><button data-filter="internal" class="filter">内部用</button></div><div class="sort-controls"><button id="frequency-sort" class="frequency-sort active" aria-pressed="true">使用頻度順 ↓</button><label class="sort-label">並び順 <select id="sort"><option value="frequency">使用頻度順</option><option value="source">ヘッダー順</option><option value="name">名前順</option></select></label></div></div>
-    <div class="reference-controls"><label><span class="control-caption">対象</span><select id="branch-select" aria-label="APIの対象"><option value="all">標準・Docking・拡張</option><option value="core">標準版</option><option value="docking">Docking専用</option><option value="extension">外部拡張</option></select></label><div class="view-switch" aria-label="一覧の表示形式"><button id="view-list" aria-pressed="true">一覧</button><button id="view-cards" aria-pressed="false">カード</button></div><button class="guide-shortcut" data-guide-category="all">初めて使う方へ → 入門ガイド</button></div>
+    <div class="reference-controls"><label><span class="control-caption">対象</span><select id="branch-select" aria-label="APIの対象"><option value="all">標準・Docking・拡張</option><option value="core">標準版</option><option value="docking">Docking専用</option><option value="extension">外部拡張</option></select></label><div class="view-switch" aria-label="一覧の表示形式"><button id="view-list" aria-pressed="true">一覧</button><button id="view-cards" aria-pressed="false">カード</button></div></div>
     <div id="types-index-controls" hidden></div>
     <div id="flag-index-controls" class="flag-index-controls" hidden><div id="flag-category-filters" class="flag-category-filters" role="group" aria-label="フラグのカテゴリ"></div><label class="flags-select-label">表示対象<select id="flag-index-visibility"><option value="public">通常の公開値</option><option value="all">すべて</option><option value="obsolete">互換名</option><option value="internal">内部用</option></select></label></div>
     <div id="cards" class="cards"></div>
@@ -68,9 +75,12 @@
   <footer><span>Dear ImGui <b>1.93.0</b> · 日本語API図鑑</span><button id="about-footer" style="background:none;color:inherit;font-size:inherit;padding:0">この資料について</button><a href="https://github.com/ocornut/imgui/tree/v1.93.0" target="_blank" rel="noopener">公式ソース ↗</a></footer>
 </main>
 </div>
-<dialog id="detail-dialog" aria-labelledby="detail-title"><div class="dialog-bar"><span id="detail-breadcrumb"></span><div><button id="copy-link" class="icon-button" title="この関数へのリンクをコピー">リンクをコピー</button><button id="detail-close" class="close" aria-label="詳細を閉じる">×</button></div></div><div id="detail-content"></div></dialog>
+<dialog id="detail-dialog" aria-labelledby="detail-title"><div class="dialog-bar"><span id="detail-breadcrumb"></span><div><button id="copy-link" class="icon-button" title="このページへのリンクをコピー">リンクをコピー</button><button id="detail-close" class="close" aria-label="一覧へ戻る"><span aria-hidden="true">←</span><span class="detail-back-label">一覧へ</span></button></div></div><div id="detail-content"></div></dialog>
+<button id="page-top" class="page-top" hidden aria-label="ページ上部へ戻る"><span aria-hidden="true">↑</span> ページ上部へ</button>
 <dialog id="image-dialog" aria-label="キャプチャを拡大表示"><button id="image-close" class="close" aria-label="拡大画像を閉じる">×</button><img id="zoom-image" alt=""><p id="zoom-caption"></p></dialog>
-<dialog id="about-dialog" aria-labelledby="about-title"><div class="dialog-bar"><span>ABOUT THIS REFERENCE</span><button id="about-close" class="close" aria-label="資料情報を閉じる">×</button></div><div class="about-content"><h2 id="about-title">この資料について</h2><p>公式タグ <strong>v1.93.0</strong> を基準に、標準版・v1.93.0-docking・外部拡張を区別して収録しています。APIの宣言と実行画像に加え、初めて使う方向けの手順・注意点・DX11/DX12の画像表示・IDの使い方を解説しています。拡張ライブラリは掲載したコミットへ固定しています。</p><div id="about-stats" class="about-stats"></div><h3>収録範囲</h3><p>標準版のImGui名前空間、公開構造体のメソッド、コンストラクター、デストラクター、演算子に加え、Docking専用APIと拡張ライブラリの主要APIを収録しています。オーバーロードは宣言ごとに表示し、互換用・内部用も区別します。</p><p>構成はWindows・標準imconfig.h・互換APIとDebug tools有効・<code>IMGUI_DEFINE_MATH_OPERATORS</code>有効です。コールバック型、関数ポインターメンバー、マクロ、コメント化された削除済み宣言は関数件数に含みません。<code>imgui_internal.h</code>全体やOS/GPU別バックエンド全APIは網羅対象ではありません。DockBuilder等の内部APIを説明する場合は内部用と明記しています。Docking・拡張側の対象範囲と検証版は各ガイドを参照してください。</p><h3>型とメンバー</h3><p>標準版とDocking版のimgui.hで有効な構造体・データメンバー、主要な型別名とコールバック型を扱います。Docking追加・互換用・内部状態を区別し、前方宣言だけの型には公開メンバー定義がないことを明記しています。内部ヘッダーや外部拡張の全構造体を網羅するものではありません。</p><h3>画像と実行確認の範囲</h3><p>公式のDirect3D 11／Direct3D 12レンダラーとWARPデバイスでオフスクリーン描画し、レンダーターゲットをPNGへ読み戻しました。画像ごとに版・サイズ・撮影コードを記録しています。OSのデスクトップ全体を撮影した画像ではなく、ImGuiの実描画結果です。サンプル内のキー・マウス操作も入力イベントとして送信しています。</p><p><strong>全宣言・全オーバーロードを個別に実行したテストではありません。</strong>画像には同名関数の代表例や、使い方を説明するための関連画面も含みます。撮影条件はキャプチャ一覧の「撮影情報」から確認できます。非描画APIや内部用APIには、関係する実行画面を付けています。条件分岐内の処理は操作状態で実行経路が変わり、静止画では時間変化や全操作を示せません。</p><h3>ガイドのコード例と画像</h3><p>コードを掲載する98ガイド・147例は、それぞれ別に実行して撮影しています。関数形式の例にはサンプル引数や入力イベントを渡し、初期化・計算など画面を作らない処理には結果確認用の表示を添えました。DX12の画像例は実際のDX12/WARP、Dockingと拡張は対応する固定版で実行しています。各節で掲載コードのハッシュと画像を照合しています。</p><h3>コード例の前提</h3><p>コード例は有効なコンテキスト・バックエンドを用意したフレーム内で、通常はBegin/Endの内側に置く断片です。撮影用の<code>Texture()</code>は市松模様を登録したDirectX 11テクスチャ、<code>FmtV()</code>はva_list版へ転送する撮影用ラッパーで、ImGui標準関数ではありません。補助関数の実装は制作プロジェクトの<code>tools/capture.cpp</code>にあります（公開用セットには制作ツールを含めていません）。設定・初期化系は関数本文に記載したタイミングを優先してください。</p><h3>公式ソース・ライセンス</h3><p><a href="https://github.com/ocornut/imgui/releases/tag/v1.93.0" target="_blank" rel="noopener">v1.93.0 リリースノート ↗</a><br><a href="https://github.com/ocornut/imgui/blob/v1.93.0/imgui.h" target="_blank" rel="noopener">この資料の基準となるimgui.h ↗</a><br><a href="https://github.com/ocornut/imgui/blob/v1.93.0/imgui_demo.cpp" target="_blank" rel="noopener">公式デモの実装 ↗</a></p><p>Dear ImGuiはOmar Cornutほか貢献者によるMITライセンスのソフトウェアです。ImGuizmo・ImSequencer・imgui-node-editorのライセンスと版は各拡張ガイドに記載しています。この日本語資料は非公式の独立した解説で、公式プロジェクトとは別のものです。</p><pre class="license">Copyright (c) 2014-2026 Omar Cornut
+<dialog id="global-search-dialog" aria-labelledby="global-search-title"></dialog>
+<dialog id="term-dialog" aria-labelledby="term-title"></dialog>
+<dialog id="about-dialog" aria-labelledby="about-title"><div class="dialog-bar"><span>ABOUT THIS REFERENCE</span><button id="about-close" class="close" aria-label="資料情報を閉じる">×</button></div><div class="about-content"><h2 id="about-title">この資料について</h2><p>公式タグ <strong>v1.93.0</strong> を基準に、標準版・v1.93.0-docking・外部拡張を区別して収録しています。APIの宣言と実行画像に加え、初めて使う方向けの手順・注意点・DX11/DX12の画像表示・IDの使い方を解説しています。拡張ライブラリは掲載したコミットへ固定しています。</p><div id="about-stats" class="about-stats"></div><h3>収録範囲</h3><p>標準版のImGui名前空間、公開構造体のメソッド、コンストラクター、デストラクター、演算子に加え、Docking専用APIと拡張ライブラリの主要APIを収録しています。オーバーロードは宣言ごとに表示し、互換用・内部用も区別します。</p><p>構成はWindows・標準imconfig.h・互換APIとDebug tools有効・<code>IMGUI_DEFINE_MATH_OPERATORS</code>有効です。コールバック型、関数ポインターメンバー、マクロ、コメント化された削除済み宣言は関数件数に含みません。<code>imgui_internal.h</code>全体やOS/GPU別バックエンド全APIは網羅対象ではありません。DockBuilder等の内部APIを説明する場合は内部用と明記しています。Docking・拡張側の対象範囲と検証版は各ガイドを参照してください。</p><h3>型とメンバー</h3><p>標準版とDocking版のimgui.hで有効な構造体・データメンバー、主要な型別名とコールバック型を扱います。Docking追加・互換用・内部状態を区別し、前方宣言だけの型には公開メンバー定義がないことを明記しています。内部ヘッダーや外部拡張の全構造体を網羅するものではありません。</p><h3>画像と実行確認の範囲</h3><p>公式のDirect3D 11／Direct3D 12レンダラーとWARPデバイスでオフスクリーン描画し、レンダーターゲットをPNGへ読み戻しました。画像ごとに版・サイズ・撮影コードを記録しています。OSのデスクトップ全体を撮影した画像ではなく、ImGuiの実描画結果です。サンプル内のキー・マウス操作も入力イベントとして送信しています。</p><p><strong>全宣言・全オーバーロードを個別に実行したテストではありません。</strong>画像には同名関数の代表例や、使い方を説明するための関連画面も含みます。撮影条件はキャプチャ一覧の「撮影情報」から確認できます。非描画APIや内部用APIには、関係する実行画面を付けています。条件分岐内の処理は操作状態で実行経路が変わり、静止画では時間変化や全操作を示せません。</p><h3>ガイドのコード例と画像</h3><p>コードを掲載する105ガイド・154例は、それぞれ別に実行して撮影しています。関数形式の例にはサンプル引数や入力イベントを渡し、初期化・計算など画面を作らない処理には結果確認用の表示を添えました。DX12の画像例は実際のDX12/WARP、Dockingと拡張は対応する固定版で実行しています。各節で掲載コードのハッシュと画像を照合しています。</p><h3>コード例の前提</h3><p>コード例は有効なコンテキスト・バックエンドを用意したフレーム内で、通常はBegin/Endの内側に置く断片です。撮影用の<code>Texture()</code>は市松模様を登録したDirectX 11テクスチャ、<code>FmtV()</code>はva_list版へ転送する撮影用ラッパーで、ImGui標準関数ではありません。補助関数の実装は制作プロジェクトの<code>tools/capture.cpp</code>にあります（公開用セットには制作ツールを含めていません）。設定・初期化系は関数本文に記載したタイミングを優先してください。</p><h3>公式ソース・ライセンス</h3><p><a href="https://github.com/ocornut/imgui/releases/tag/v1.93.0" target="_blank" rel="noopener">v1.93.0 リリースノート ↗</a><br><a href="https://github.com/ocornut/imgui/blob/v1.93.0/imgui.h" target="_blank" rel="noopener">この資料の基準となるimgui.h ↗</a><br><a href="https://github.com/ocornut/imgui/blob/v1.93.0/imgui_demo.cpp" target="_blank" rel="noopener">公式デモの実装 ↗</a></p><p>Dear ImGuiはOmar Cornutほか貢献者によるMITライセンスのソフトウェアです。ImGuizmo・ImSequencer・imgui-node-editorのライセンスと版は各拡張ガイドに記載しています。この日本語資料は非公式の独立した解説で、公式プロジェクトとは別のものです。</p><pre class="license">Copyright (c) 2014-2026 Omar Cornut
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -193,29 +203,33 @@ SOFTWARE.
 <div class="toast" id="toast" role="status"></div>
 <noscript><p>検索・関数詳細の表示にはJavaScriptを有効にしてください。</p></noscript>
 <script defer src="site-assets/data/init.js?v=8c83fa4b40da"></script>
-<script defer src="site-assets/data/api-core.js?v=57369619e178"></script>
+<script defer src="site-assets/data/api-core.js?v=5672b9eaba6b"></script>
 <script defer src="site-assets/data/api-docking.js?v=39738fe87cbf"></script>
 <script defer src="site-assets/data/api-extension.js?v=89c9e9c3cdb9"></script>
-<script defer src="site-assets/data/guides-basics.js?v=98c43654623a"></script>
-<script defer src="site-assets/data/guides-debugging.js?v=4662553a9f63"></script>
-<script defer src="site-assets/data/guides-docking.js?v=31f33cac8507"></script>
-<script defer src="site-assets/data/guides-engine.js?v=310162faa3d8"></script>
-<script defer src="site-assets/data/guides-extensions.js?v=ee1bc7bd300d"></script>
-<script defer src="site-assets/data/guides-recipes.js?v=8ff696f8ff15"></script>
-<script defer src="site-assets/data/guides-rendering.js?v=96130ceb4ed3"></script>
-<script defer src="site-assets/data/guides-troubleshooting.js?v=46ee1f5b764a"></script>
+<script defer src="site-assets/data/guides-basics.js?v=3b8ad581dc5f"></script>
+<script defer src="site-assets/data/guides-debugging.js?v=595f3d9946ff"></script>
+<script defer src="site-assets/data/guides-docking.js?v=e2757b57a842"></script>
+<script defer src="site-assets/data/guides-engine.js?v=017659d149cf"></script>
+<script defer src="site-assets/data/guides-extensions.js?v=eaf2624da73e"></script>
+<script defer src="site-assets/data/guides-recipes.js?v=3052f7f9afb7"></script>
+<script defer src="site-assets/data/guides-rendering.js?v=d1b46e280e28"></script>
+<script defer src="site-assets/data/guides-troubleshooting.js?v=910a9dbfb6c3"></script>
 <script defer src="site-assets/data/guides-visuals.js?v=e8721652f5e2"></script>
-<script defer src="site-assets/data/scenes.js?v=9e6b6e46d43a"></script>
+<script defer src="site-assets/data/scenes.js?v=1dc3057ec350"></script>
 <script defer src="site-assets/data/flags.js?v=70aa9b66750a"></script>
 <script defer src="site-assets/data/types.js?v=c67b972eb04e"></script>
+<script defer src="site-assets/data/learning.js?v=770ed3741f25"></script>
 <script defer src="site-assets/data/categories.js?v=d9b8c59937c0"></script>
-<script defer src="site-assets/data/stats.js?v=df0648cbce2b"></script>
+<script defer src="site-assets/data/stats.js?v=fb01d2f47fb8"></script>
 <script defer src="site-assets/data/libraries.js?v=905e5266ff48"></script>
 <script defer src="site-assets/data/supplement-sources.js?v=679f9e51a9ca"></script>
 <script defer src="site-assets/data/reference-notes.js?v=0a29d8ffecd5"></script>
-<script defer src="site-assets/data/emphasis.js?v=3f9513f79f4c"></script>
+<script defer src="site-assets/data/emphasis.js?v=103cdb3c0f44"></script>
 <script defer src="site-assets/js/search.js?v=b1d7a2d17b4a"></script>
 <script defer src="site-assets/js/types.js?v=2a53492d274f"></script>
-<script defer src="site-assets/js/app.js?v=e2c5ded3f673"></script>
+<script defer src="site-assets/js/learning.js?v=2def251f5974"></script>
+<script defer src="site-assets/js/docs-ui.js?v=9e4970c73b9f"></script>
+<script defer src="site-assets/js/reader.js?v=f57a3d33642a"></script>
+<script defer src="site-assets/js/app.js?v=3f74c97a8775"></script>
 </body>
 </html>

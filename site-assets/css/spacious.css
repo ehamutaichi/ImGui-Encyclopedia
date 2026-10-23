@@ -1,0 +1,179 @@
+/* 一覧の操作と、文章を読む領域の間隔を分けて確保します。 */
+main{padding:0 44px}
+.workspace-tabs{margin:0 -44px;padding:0 28px;height:50px}
+.workspace-tab{padding:0 20px;font-size:12px}
+.reference{max-width:1280px;margin:0 auto;padding:40px 0 64px}
+.section-heading{margin-bottom:28px;gap:20px}
+.section-heading h2{font-size:29px}
+.searchbox{height:52px}
+.search-row{gap:18px}
+.filter-row{margin:24px 0 18px;gap:18px}
+.filters{gap:10px}
+.filter{padding:9px 13px;font-size:12px}
+.reference-controls{gap:16px;margin:20px 0 30px}
+.reference-controls select,.view-switch button{padding:9px 12px}
+.guide-shortcut{margin-left:0;padding:8px 0}
+.cards{gap:24px}
+.cards.list-view{border-radius:12px}
+.api-row{padding:23px 24px;gap:24px}
+.row-title code{font-size:15px;line-height:1.85}
+.row-summary{font-size:14px;line-height:1.95;margin-top:8px}
+.row-meta{gap:12px}
+.card-body{padding:24px}
+.card-title{line-height:1.85}
+.card-description{line-height:2;font-size:14px}
+.sidebar{padding:28px 16px}
+.explorer-section{padding-bottom:22px;margin-bottom:22px}
+.explorer-heading{margin-bottom:12px}
+.explorer-link,.category{padding:9px 12px;line-height:1.85;font-size:13px}
+.course-sidebar-link{color:var(--accent);background:var(--notice);margin-bottom:10px;border-radius:8px}
+.guide-paths{margin:40px 0}
+.guide-path-grid{gap:24px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.guide-path-card{padding:28px}
+.guide-path-card p,.guide-path-card li button{font-size:14px;line-height:1.95}
+.guide-path-card li{margin:9px 0}
+.guide-card{padding:28px;min-height:210px}
+.guide-card p{font-size:14px;line-height:2}
+.guide-filters{margin:30px 0;gap:10px}
+
+/* 長い本文の行幅を制限し、見出し・文章・コードのまとまりを離します。 */
+.documentation-layout{max-width:1320px;grid-template-columns:minmax(0,1fr) 190px;gap:40px;padding:44px 44px 80px}
+.detail-header{padding:0 0 36px}
+.detail-header h2{font-size:30px;line-height:1.65;margin:12px 0 18px}
+.detail-header .japanese-title{font-size:19px;line-height:1.9;margin-bottom:22px}
+.detail-description{font-size:16px;line-height:2.15;margin:24px 0 0}
+.detail-badges,.function-flags{gap:12px;margin-top:20px}
+.documentation-body{max-width:900px}
+.documentation-body>.guide-body,.documentation-body>.type-body{padding:0;max-width:none}
+.detail-grid{grid-template-columns:minmax(0,1fr);padding:0 0 40px;gap:36px}
+.detail-grid .detail-image{max-width:800px;margin:0 auto}
+.sample-box{margin-top:0}
+.documentation-body .guide-body p,.documentation-body .guide-body li,.documentation-body .api-notes p,.documentation-body .api-notes li{font-size:16px;line-height:2.15}
+.guide-body p{margin:18px 0}
+.guide-body .guide-summary{font-size:18px;line-height:2.1;margin:0 0 40px}
+.guide-body>section{margin:52px 0;padding-top:4px}
+.guide-body h3{font-size:24px;line-height:1.7;margin:0 0 24px;padding-bottom:16px}
+.guide-body ul{margin:20px 0 28px;padding-left:26px}
+.guide-body li+li{margin-top:14px}
+.guide-body pre.code,pre.code{padding:24px;line-height:1.95;margin:22px 0}
+.minor-heading{margin:22px 0 14px;gap:16px}
+.guide-example-result{padding:24px;margin:30px 0 40px}
+.guide-body figure{margin:28px 0}
+.guide-table{margin:28px 0;font-size:15px}
+.guide-table th,.guide-table td{padding:17px 18px;line-height:2}
+.guide-flow{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.guide-flow li{padding:20px 24px!important}
+.guide-flow li+li{margin-top:0}
+.related-links{gap:12px}
+.related-link{padding:10px 14px;font-size:13px;line-height:1.85}
+.variants,.api-notes,.api-type-link{padding:36px 0;margin-top:20px}
+.variant{margin-bottom:22px}
+.variant>summary{padding:20px}
+.variant-content{padding:24px}
+.params th,.params td{padding:16px}
+.params td,.return-line,.return-line strong{font-size:14px;line-height:2}
+.api-calling-contract{margin:0 0 40px;padding:28px 30px;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent)}
+.api-calling-contract h3{margin:0 0 24px;font-size:21px}
+.api-calling-contract dt{margin-top:22px;font-size:14px;color:var(--accent)}
+.api-calling-contract dd{font-size:16px;line-height:2.1;margin:10px 0 22px}
+.api-calling-contract details{margin:24px 0}
+.api-calling-contract summary{padding:12px 0;cursor:pointer}
+.api-note-box,.api-check-box,.api-error-box{padding:24px;margin:24px 0}
+.api-calling-contract.api-note-box{padding:28px 30px;margin:0 0 40px}
+.doc-outline{padding:10px 0;top:80px}
+.doc-outline button{padding:10px 12px;line-height:1.9}
+.flag-reference-body{padding:0}
+.flag-reference-body>section{margin:36px 0}
+.flag-value,.type-member{padding:24px;margin:24px 0}
+.mobile-doc-outline{margin:0 0 32px}
+
+/* 入門コースは、入口・現在地・次の一歩を同じ見た目で案内します。 */
+.course-entry{display:flex;align-items:center;justify-content:space-between;gap:36px;padding:34px 36px;margin:0 0 44px;border:1px solid var(--notice-line);border-radius:16px;background:var(--notice)}
+.course-entry[hidden]{display:none}
+.course-entry .eyebrow{color:var(--accent);margin-bottom:12px}
+.course-entry h2{font-size:25px;line-height:1.65;margin:0 0 12px}
+.course-entry p:not(.eyebrow){font-size:15px;line-height:2;max-width:640px;margin:0}
+.course-progress{display:block;font-size:12px;color:var(--muted);margin-top:16px}
+.course-entry-actions{display:flex;flex-direction:column;gap:14px;flex-shrink:0}
+.course-entry .primary,.course-navigation .primary{font-size:14px;line-height:1.8;padding:14px 20px;border-radius:9px;white-space:normal}
+.course-location{display:flex;align-items:center;flex-wrap:wrap;gap:16px 24px;padding:18px 0;margin-bottom:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);font-size:13px}
+.course-location button{background:none;color:var(--accent);text-align:left;padding:8px 0}
+.course-location span{color:var(--muted)}
+.course-location progress{accent-color:var(--accent);width:92px;height:7px;margin-left:auto}
+.course-roadmap ol{list-style:none;padding:0;margin:28px 0}
+.course-roadmap li{display:flex;align-items:flex-start;gap:22px;padding:26px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.course-roadmap li+li{margin-top:18px}
+.course-step-number{display:grid;place-items:center;flex:0 0 40px;height:40px;border-radius:50%;background:var(--notice);color:var(--accent);font:600 16px var(--mono)}
+.course-roadmap li>div{min-width:0}
+.course-roadmap button{font-size:18px;font-weight:650;line-height:1.8;text-align:left;background:none;color:var(--accent);padding:0}
+.course-roadmap li p{margin:12px 0;font-size:15px!important}
+.course-roadmap small{color:var(--muted);font-size:12px}
+.course-navigation{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:28px!important}
+.course-navigation-links{display:flex;justify-content:space-between;align-items:stretch;gap:16px;margin-top:28px}
+.course-navigation-links>*{flex:1;text-align:left}
+.course-navigation .course-storage-status{font-size:12px!important;color:var(--muted);margin:12px 0}
+.course-complete[aria-pressed="true"]{border-color:var(--green);color:var(--green)}
+.course-navigation .course-complete{min-height:46px}
+@media(min-width:1700px){
+  .documentation-layout{max-width:1480px}
+  .documentation-body{max-width:1100px}
+  .detail-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .guide-body>section,.guide-body>.guide-summary,.guide-body>.course-location{max-width:860px;margin-left:auto;margin-right:auto}
+}
+@media(max-width:1300px){
+  main{padding:0 32px}.workspace-tabs{margin:0 -32px}
+  .documentation-layout{grid-template-columns:minmax(0,1fr);max-width:960px;padding:36px}
+  .doc-outline{display:none}
+  .mobile-doc-outline{display:block;padding:16px 20px}
+  .course-entry{flex-direction:column;align-items:flex-start;gap:24px}
+  .course-entry-actions{flex-direction:row;flex-wrap:wrap}
+}
+@media(max-width:1000px){
+  main{padding:0 24px}.workspace-tabs{margin:0 -24px;padding:0;height:52px}
+  .workspace-tab{font-size:14px;padding:0 8px}
+  .reference{padding-top:28px}
+  .documentation-layout{padding:28px;max-width:900px}
+  .detail-header{padding:0 0 28px}
+  .documentation-body>.guide-body,.documentation-body>.type-body{padding:0}
+  .detail-grid{padding:0 0 32px;gap:28px}
+  .variants,.api-notes,.api-type-link{padding:30px 0}
+  .mobile-doc-outline{margin:0 0 32px}
+  .course-entry{padding:28px;margin-bottom:32px}
+  .guide-path-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:600px){
+  main{padding:0 20px}.workspace-tabs{margin:0 -20px}
+  .reference{padding:24px 0 48px}
+  .documentation-layout{padding:24px 20px 56px}
+  .detail-header h2{font-size:25px}
+  .detail-header .japanese-title{font-size:18px}
+  .detail-description{font-size:16px}
+  .course-entry{padding:24px;gap:22px}
+  .course-entry h2{font-size:23px}
+  .course-entry-actions{width:100%;flex-direction:column}
+  .course-entry .primary{width:100%;text-align:left}
+  .course-location{gap:10px 18px}
+  .course-location button{flex-basis:100%}
+  .guide-body>section{margin:40px 0}
+  .guide-body h3{font-size:22px}
+  .guide-table th,.guide-table td{padding:12px 10px;font-size:14px}
+  .guide-body pre.code,pre.code{padding:18px;font-size:14px}
+  .guide-example-result{padding:16px}
+  .api-row{padding:22px 18px}
+  .row-summary{margin-left:0}
+  .row-meta{margin-left:0}
+  .cards:not(.list-view){grid-template-columns:minmax(0,1fr)}
+  .guide-card,.guide-path-card{padding:24px}
+  .course-roadmap li{padding:20px 16px;gap:14px}
+  .course-step-number{flex-basis:32px;height:32px;font-size:14px}
+  .course-roadmap button{font-size:17px}
+  .course-navigation{padding:22px!important}
+  .course-navigation-links{flex-direction:column}
+  .course-navigation-links>*{padding:14px 16px}
+  .api-calling-contract.api-note-box{padding:24px 20px}
+  .variant-content{padding:16px}
+  .variant>summary{padding:16px}
+  .related-links{gap:12px}
+  .related-link{padding:11px 13px}
+  .flag-value,.type-member{padding:20px 16px}
+}
